@@ -85,3 +85,8 @@ header > nav > a {
 .blog-post {
     font-family: Helvetica, Arial, sans-serif;
 }
+
+a {
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+}
