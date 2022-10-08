@@ -6,7 +6,7 @@ class HeaderComponent extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header>
-          <a href="/" class="title">
+          <a href="index.html" class="title">
               Brian Briscoe
           </a>
           <nav>

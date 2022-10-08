@@ -26,7 +26,7 @@
     }
 }
 html {
-    font-family: Monaco, "Verda sans-serif"
+    font-family: Monaco, Verda, sans-serif
 }
 body {
     max-width: var(--page-width);
