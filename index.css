@@ -85,6 +85,14 @@ header > nav > a {
 .blog-post {
     font-family: Helvetica, Arial, sans-serif;
 }
+.blog-post-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blog-post-image img {
+    flex-shrink: 0;
+}
 
 a {
     text-underline-offset: 3px;

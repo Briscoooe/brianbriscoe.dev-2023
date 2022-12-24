@@ -6,13 +6,13 @@ class HeaderComponent extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header>
-          <a href="/" class="title">
+          <a href="index.html" class="title">
               Brian Briscoe
           </a>
           <nav>
-              <a href="/">Home</a>
+              <a href="index.html">Home</a>
               <a href="https://twitter.com/brianbriscoe_">Twitter</a>
-              <a href="/blog">Blog</a>
+              <a href="blog.html">Blog</a>
           </nav>
       </header>
     `;
