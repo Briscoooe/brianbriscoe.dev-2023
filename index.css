@@ -84,6 +84,7 @@ header > nav > a {
 }
 .blog-post {
     font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.5rem;
 }
 .blog-post-image {
     display: flex;
@@ -94,6 +95,11 @@ header > nav > a {
     flex-shrink: 0;
 }
 
+code {
+    background: #e5e5e5;
+    border-radius: 5px;
+    padding: 0 0.2rem;
+}
 a {
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
