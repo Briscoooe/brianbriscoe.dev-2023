@@ -12,6 +12,9 @@
     .title {
         color: #2f2f2f;
     }
+    code {
+        background: #e5e5e5;
+    }
 }
 @media (prefers-color-scheme: dark) {
     body {
@@ -23,6 +26,9 @@
     }
     .title {
         color: white;
+    }
+    code {
+        background: #444e60;
     }
 }
 html {
@@ -95,12 +101,11 @@ header > nav > a {
     flex-shrink: 0;
 }
 
-code {
-    background: #e5e5e5;
-    border-radius: 5px;
-    padding: 0 0.2rem;
-}
 a {
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
+}
+code {
+    border-radius: 5px;
+    padding: 0 0.2rem;
 }
