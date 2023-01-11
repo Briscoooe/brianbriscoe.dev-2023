@@ -9,6 +9,9 @@
     a {
         color: #494949
     }
+    a:hover {
+        color: #7F7F7F;
+    }
     .title {
         color: #2f2f2f;
     }
@@ -22,7 +25,10 @@
         color: white
     }
     a {
-        color: #f5f7fa;
+        color: #fffdfd;
+    }
+    a:hover {
+        color: #CCCACA;
     }
     .title {
         color: white;
@@ -104,6 +110,7 @@ header > nav > a {
 a {
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
+    transition: color 0.2s;
 }
 code {
     border-radius: 5px;
