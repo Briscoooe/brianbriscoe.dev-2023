@@ -75,7 +75,7 @@ function iterateDirectoryFiles(absoluteDirectoryName) {
       } else if (sourceFileOrFolder.endsWith('.html')) {
         buildHtmlFile(absoluteDirectoryName, sourceFileOrFolder);
       }
-    } else if (lstat.isDirectory()) {
+    } else if (lstat.isDirectory() && sourceFileOrFolder !== COMPONENTS_DIR_NAME) {
       iterateDirectoryFiles(path.join(absoluteDirectoryName, sourceFileOrFolder))
     }
   }
