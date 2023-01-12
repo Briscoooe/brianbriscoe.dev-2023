@@ -20,7 +20,7 @@ global.customElements = new CustomElementRegistry();
 
 const COMPONENTS_DIR_NAME = 'components';
 const SRC_DIR = path.join(__dirname, 'src');
-const COMPONENTS_DIR = path.join(SRC_DIR, 'components');
+const COMPONENTS_DIR = path.join(SRC_DIR, COMPONENTS_DIR_NAME);
 const OUT_DIR = path.join(__dirname, 'build');
 
 function mkDirIfNotExists(absoluteDirPath) {
