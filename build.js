@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require("path");
+const config = require('./config');
 
 class HTMLElement {
 }
@@ -18,8 +19,8 @@ class CustomElementRegistry {
 global.HTMLElement = HTMLElement;
 global.customElements = new CustomElementRegistry();
 
-const COMPONENTS_DIR_NAME = 'components';
-const SRC_DIR = path.join(__dirname, 'src');
+const COMPONENTS_DIR_NAME = config.componentsDirectory;
+const SRC_DIR = path.join(__dirname, config.sourceDirectory);
 const COMPONENTS_DIR = path.join(SRC_DIR, COMPONENTS_DIR_NAME);
 const OUT_DIR = path.join(__dirname, 'build');
 
