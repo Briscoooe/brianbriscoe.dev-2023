@@ -1,28 +1,27 @@
 const fs = require('fs');
 const path = require("path");
 
-class HTMLElement {}
+class HTMLElement {
+}
+
 class CustomElementRegistry {
   elements = {};
-  constructor(props) {}
+
+  constructor(props) {
+  }
 
   define(name, constructor, options) {
     this.elements[name] = constructor;
   }
 }
+
 global.HTMLElement = HTMLElement;
 global.customElements = new CustomElementRegistry();
 
+const COMPONENTS_DIR_NAME = 'components';
 const SRC_DIR = path.join(__dirname, 'src');
 const COMPONENTS_DIR = path.join(SRC_DIR, 'components');
 const OUT_DIR = path.join(__dirname, 'build');
-
-function importWebComponents() {
-  const componentFileNameList = fs.readdirSync(COMPONENTS_DIR);
-  for (const componentFileName of componentFileNameList) {
-    require(path.join(COMPONENTS_DIR, componentFileName));
-  }
-}
 
 function mkDirIfNotExists(absoluteDirPath) {
   if (!fs.existsSync(absoluteDirPath)) {
@@ -34,7 +33,14 @@ function init() {
   mkDirIfNotExists(OUT_DIR);
 }
 
-function buildFile(absoluteDirectoryName, fileName) {
+function importWebComponents() {
+  const componentFileNameList = fs.readdirSync(COMPONENTS_DIR);
+  for (const componentFileName of componentFileNameList) {
+    require(path.join(COMPONENTS_DIR, componentFileName));
+  }
+}
+
+function buildHtmlFile(absoluteDirectoryName, fileName) {
   console.log('Building', path.join(absoluteDirectoryName, fileName));
   let fileString = fs.readFileSync(path.join(absoluteDirectoryName, fileName), 'utf-8');
   for (const elementName of Object.keys(customElements.elements)) {
@@ -43,6 +49,7 @@ function buildFile(absoluteDirectoryName, fileName) {
     elementComponent.connectedCallback();
     fileString = fileString.replace(elementNameWithTags, elementComponent.innerHTML);
   }
+  fileString = fileString.split('\n').filter((l) => !l.includes(`<script src="${COMPONENTS_DIR_NAME}`)).join('\n');
   const relativeDirectoryName = absoluteDirectoryName.replace(SRC_DIR, '');
   const outputPath = path.join(OUT_DIR, relativeDirectoryName);
   mkDirIfNotExists(outputPath);
@@ -56,13 +63,14 @@ function iterateDirectoryFiles(absoluteDirectoryName) {
       if (sourceFileOrFolder.endsWith('.css')) {
         fs.cpSync(path.join(absoluteDirectoryName, sourceFileOrFolder), path.join(OUT_DIR, sourceFileOrFolder));
       } else if (sourceFileOrFolder.endsWith('.html')) {
-        buildFile(absoluteDirectoryName, sourceFileOrFolder);
+        buildHtmlFile(absoluteDirectoryName, sourceFileOrFolder);
       }
     } else if (lstat.isDirectory()) {
       iterateDirectoryFiles(path.join(absoluteDirectoryName, sourceFileOrFolder))
     }
   }
 }
+
 function build() {
   init()
   importWebComponents()
