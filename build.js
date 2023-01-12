@@ -40,16 +40,26 @@ function importWebComponents() {
   }
 }
 
-function buildHtmlFile(absoluteDirectoryName, fileName) {
-  console.log('Building', path.join(absoluteDirectoryName, fileName));
-  let fileString = fs.readFileSync(path.join(absoluteDirectoryName, fileName), 'utf-8');
+function replaceWebComponentWithHtml(fileString) {
   for (const elementName of Object.keys(customElements.elements)) {
     const elementNameWithTags = `<${elementName}></${elementName}>`
     const elementComponent = new customElements.elements[elementName]();
     elementComponent.connectedCallback();
     fileString = fileString.replace(elementNameWithTags, elementComponent.innerHTML);
   }
-  fileString = fileString.split('\n').filter((l) => !l.includes(`<script src="${COMPONENTS_DIR_NAME}`)).join('\n');
+  return fileString;
+}
+
+function removeComponentImports(fileString) {
+  return fileString.split('\n').filter((l) => !l.includes(`<script src="${COMPONENTS_DIR_NAME}`)).join('\n');
+}
+
+function buildHtmlFile(absoluteDirectoryName, fileName) {
+  console.log('Building', path.join(absoluteDirectoryName, fileName));
+  let fileString = fs.readFileSync(path.join(absoluteDirectoryName, fileName), 'utf-8');
+  fileString = replaceWebComponentWithHtml(fileString);
+  fileString = removeComponentImports(fileString);
+
   const relativeDirectoryName = absoluteDirectoryName.replace(SRC_DIR, '');
   const outputPath = path.join(OUT_DIR, relativeDirectoryName);
   mkDirIfNotExists(outputPath);
