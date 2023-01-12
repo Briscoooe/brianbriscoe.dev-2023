@@ -12,6 +12,7 @@ class CustomElementRegistry {
 global.HTMLElement = HTMLElement;
 global.customElements = new CustomElementRegistry();
 const COMPONENTS_DIR = path.join(__dirname, 'components');
+const OUT_DIR = path.join(__dirname, 'build');
 (async () => {
   const componentFileNameList = fs.readdirSync(COMPONENTS_DIR);
   for (const componentFileName of componentFileNameList) {
@@ -24,5 +25,6 @@ const COMPONENTS_DIR = path.join(__dirname, 'components');
     elementComponent.connectedCallback();
     indexFileString = indexFileString.replace(elementNameWithTags, elementComponent.innerHTML);
   }
-  console.log('indexFileString', indexFileString);
+  fs.mkdirSync(OUT_DIR);
+  fs.writeFileSync(path.join(OUT_DIR, 'index.html'), indexFileString);
 })();
