@@ -85,6 +85,12 @@ header {
     max-width: var(--page-width);
 }
 
+@media (max-width: 700px) {
+    header {
+        flex-direction: column;
+    }
+}
+
 header > nav {
     display: flex;
     flex-direction: row;
