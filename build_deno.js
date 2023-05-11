@@ -1,3 +1,5 @@
+import { JSDOM } from "jsdom";
+
 const fs = require('fs');
 const path = require("path");
 const config = require('./config');
@@ -57,9 +59,17 @@ class Element extends Node{
   }
 
 }
+const supportedTagNames = [
+  'span',
+  'img',
+  'style',
+]
 const document = {
 
   createElement: (tagName, options) => {
+    if (!supportedTagNames.includes(tagName)) {
+      throw new Error(`Unsupported tag "${tagName}"`);
+    }
     return new Element(tagName)
   },
 }
@@ -133,6 +143,7 @@ function iterateDirectoryFiles(absoluteDirectoryName) {
 function build() {
   init()
   // TODO - get all web component file names here to be removed from script tags
+  // TODO - change header-component js to be same style as example component. render html instead of innerHtml raw string
   importWebComponents()
   iterateDirectoryFiles(SRC_DIR);
 }
