@@ -1,18 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          name="viewport">
     <meta charset="utf-8"/>
-    <title>Brian Briscoe</title>
+    <title>Brian Briscoe - Resume</title>
     <link href="index.css" rel="stylesheet">
-    <script src="components/header-component.js"></script>
-    <script src="components/popup-component.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <main>
-    <header-component></header-component>
-    <section>
-    </section>
+    <div style="font-family: 'Raleway'">
+        <div style="display: flex;flex-direction: row;justify-content: space-between">
+            <div style="display: flex;flex-direction: row">
+                <img height="150" src="https://i.imgur.com/pjP4eRj.jpeg"
+                     style="border-radius: 16px"
+                     width="150"/>
+                <div style="margin-left: 20px">
+                    <h1>Brian Briscoe</h1>
+                    <h3>Senior Software Engineer</h3>
+                </div>
+            </div>
+            <div style="display:flex; flex-direction: column;">
+                <h3>About</h3>
+                <ul style="list-style: none;">
+                    <li style="display: flex;flex-direction: row">
+                        <svg class="w-6 h-6" fill="none" height="20"
+                             stroke="currentColor" stroke-width="1.5"
+                             viewBox="0 0 24 24"
+                             width="20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                        <span>Remote, Europe</span>
+                    </li>
+                    <li>
+                        <svg height="20" viewBox="0 0 24 24" width="20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <a href="https://github.com/Briscoooe">Github</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="#recent-tech">
+            <h2>Recent technologies</h2>
+            <h3>Frontend</h3>
+            <p>Typescript, React, Redux, Apollo, Tailwind, GraphQL, Ethers, Next.js</p>
+            <h3>Backend</h3>
+            <p>Django/Django Rest Framework, Python, Flask, PyTest, Celery, Node.js, Express,
+                OpenAPI</p>
+            <h3>Infrastructure</h3>
+            <p>Docker, PostgreSQL, MySQL, MongoDB, Redis, Cloudflare Workers, RabbitMQ,
+                Celery, AWS (Cloudformation, CDK, Lambda, SES, IAM, EC2, DynamoDB, API
+                Gateway, RDS, S3, Elastic Beanstalk, Elastic Container Service)</p>
+            <h3>Third-party services</h3>
+            <p>Sentry, LogRocket, NewRelic, ElasticSearch</p>
+            <h3>Other</h3>
+            <p>Git, Linux</p>
+        </div>
+        <div id="personal-projects">
+            <h2>Personal projects</h2>
+            <h3><a href="https://github.com/Briscoooe/irish-rail-json-api">Irish Rail REST API</a></h3>
+            <p>An unofficial REST API for the <a href="http://api.irishrail.ie/realtime">Irish Rail Realtime API</a>. The current API returns XML across a series of inconsistently named SOAP endpoints and it's not very user-friendly. I used Flask to make a self-documenting OpenAPI REST API to make it easier to interact with and get a view of how the different endpoints relate to each other.</p>
+            <h3><a href="https://briscoooe.github.io/tools/">Tools</a></h3>
+            <p>This is a collection of tools I find myself needing often. The motivation for this project is to not have to trust or depend on any online service, particularly string manipulation tools on data which may be sensitive.</p>
+            <p>The project is 100% dependency free. It is completely static using only HTML, CSS, and JavaScript. There is no frameworks or build process and there is no network activity.</p>
+            <h3><a href="https://github.com/Briscoooe/Discogrify/">Discogrify</a></h3>
+            <p>The service allows you to search for an artist on Spotify and then generate a playlist containing that artist's entire Spofify discography. This functionality is not possible using Spotifys native UI so I took it upon myself to make it.</p>
+            <h3>Hashtag Swag</h3>
+            <p>A Twitter bot that generates real, purchasable t-shirts based on currently trending hashtags. Use of an on-demand clothing printing service allows customers to buy t-shirts without me ever handling them.</p>
+        </div>
+        <div id="open-source">
+            <h2>Open Source contributions</h2>
+            <h3><a href="https://github.com/jrnl-org/jrnl/pull/1653/">jrnl</a></h3>
+            <p>jrnl is a journal application for the command line. I made a fix for a bug I noticed where blank entries were being saved when they shouldn't have been.</p>
+            <h3><a href="https://github.com/proginosko/LeechBlockNG/pull/286/">Leechblock</a></h3>
+            <p>Made a quality of life improvement to the Leechblock Chrome extension. The extension allows you to block websites for a certain amount of time. The improvement was to automatically focus on the number input element when the popup is opened.</p>
+            <h3><a href="https://github.com/docker/docs/pull/16619/">Docker (docs)</a></h3>
+            <p>Updated the documentation for the Python SDK to use Python3 syntax instead of Python2.</p>
+            <h3><a href="https://github.com/QuantumBadger/RedReader/pull/593/">RedReader</a></h3>
+            <p>RedReader is an unofficial, open source Android client for Reddit. I made a fix for a bug I noticed where whitespace comments would not appear properly in the app.</p>
+        </div>
+    </div>
 </main>
 </body>
 </html>
