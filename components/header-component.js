@@ -13,6 +13,7 @@ class HeaderComponent extends HTMLElement {
               <a href="/">Home</a>
               <a href="https://twitter.com/brianbriscoe_">Twitter</a>
               <a href="/blog">Blog</a>
+              <a href="/resume">Resume</a>
           </nav>
       </header>
     `;
