@@ -5,36 +5,36 @@ class PopUpInfo extends HTMLElement {
     super();
 
     // Create a shadow root
-    const shadow = this.attachShadow({mode: 'open'});
+    const shadow = this.attachShadow({ mode: "open" });
 
     // Create spans
-    const wrapper = document.createElement('span');
-    wrapper.setAttribute('class', 'wrapper');
+    const wrapper = document.createElement("span");
+    wrapper.setAttribute("class", "wrapper");
 
-    const icon = document.createElement('span');
-    icon.setAttribute('class', 'icon');
-    icon.setAttribute('tabindex', 0);
+    const icon = document.createElement("span");
+    icon.setAttribute("class", "icon");
+    icon.setAttribute("tabindex", 0);
 
-    const info = document.createElement('span');
-    info.setAttribute('class', 'info');
+    const info = document.createElement("span");
+    info.setAttribute("class", "info");
 
     // Take attribute content and put it inside the info span
-    info.textContent = this.getAttribute('data-text');
+    info.textContent = this.getAttribute("data-text");
 
     // Insert icon
     let imgUrl;
-    if(this.hasAttribute('img')) {
-      imgUrl = this.getAttribute('img');
+    if (this.hasAttribute("img")) {
+      imgUrl = this.getAttribute("img");
     } else {
-      imgUrl = 'https://i.imgur.com/x4DfswP.jpeg';
+      imgUrl = "https://i.imgur.com/x4DfswP.jpeg";
     }
 
-    const img = document.createElement('img');
+    const img = document.createElement("img");
     img.src = imgUrl;
     icon.appendChild(img);
 
     // Create some CSS to apply to the shadow dom
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     console.log(style.isConnected);
 
     style.textContent = `
@@ -77,4 +77,4 @@ class PopUpInfo extends HTMLElement {
 }
 
 // Define the new element
-customElements.define('popup-info', PopUpInfo);
+customElements.define("popup-info", PopUpInfo);

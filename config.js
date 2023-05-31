@@ -1,4 +1,4 @@
 module.exports = {
-  componentsDirectory: 'components',
-  sourceDirectory: 'src'
-}
+  componentsDirectory: "components",
+  sourceDirectory: "src",
+};

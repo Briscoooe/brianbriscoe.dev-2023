@@ -1,106 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          name="viewport">
-    <meta charset="utf-8"/>
+  <head>
+    <meta
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
     <script type="module">
-      import { h, Component, render } from 'https://esm.sh/preact';
-      import { useState, useEffect } from 'https://esm.sh/preact/hooks';
-      import htm from 'https://esm.sh/htm';
+      import { h, render } from "https://esm.sh/preact";
+      import { useState, useEffect } from "https://esm.sh/preact/hooks";
+      import htm from "https://esm.sh/htm";
       const apiUrl = "https://resumai.fly.dev";
-
 
       const html = htm.bind(h);
       const exampleQuestions = [
         "Where did Brian go to school?",
         "What technologies does Brian know?",
         "How many years of experience does Brian have?",
-      ]
-      const personas = [
-        "normal", "friendly", "poet", "rapper"
-      ]
-      const languages = [
-        "en", "es", "fr", "de", "it", "pt"
-      ]
+      ];
+      const personas = ["normal", "friendly", "poet", "rapper"];
+      const languages = ["en", "es", "fr", "de", "it", "pt"];
 
-      function App (props) {
-        const [output, setOutput] = useState("")
-        const [message, setMessage] = useState("")
-        const [persona, setPersona] = useState("normal")
-        const [language, setLanguage] = useState("en")
+      function App(props) {
+        const [output, setOutput] = useState("");
+        const [message, setMessage] = useState("");
+        const [persona, setPersona] = useState("normal");
+        const [language, setLanguage] = useState("en");
         const sendChatMessage = (message) => {
-          setOutput("")
-          fetch(`${apiUrl}/chat?${new URLSearchParams({
-            message,
-            persona,
-            language
-          })}`, {
-            method: "GET",
-          }).then(async (response) => {
-            const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
-            let str = ''
-            while (true) {
-              const {value, done} = await reader.read();
-              if (done) break;
-              str += value
-                setOutput(str)
+          setOutput("");
+          fetch(
+            `${apiUrl}/chat?${new URLSearchParams({
+              message,
+              persona,
+              language,
+            })}`,
+            {
+              method: "GET",
             }
-          })
-        }
+          ).then(async (response) => {
+            const reader = response.body
+              .pipeThrough(new TextDecoderStream())
+              .getReader();
+            let str = "";
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              str += value;
+              setOutput(str);
+            }
+          });
+        };
         const clicked = () => {
-          sendChatMessage(message)
-        }
+          sendChatMessage(message);
+        };
 
         const handleInput = (e) => {
-          setMessage(e.target.value)
-        }
+          setMessage(e.target.value);
+        };
 
         return html`
-            <div>
-                <input type="text" id="chat-input" value=${message} onInput=${handleInput} />
-                <button onClick=${clicked}>Go</button>
-                <br/>
-                <select onChange=${(e) => setPersona(e.target.value)}>
-                    ${personas.map((persona) => {
-                      return html`<option value=${persona}>${persona}</option>`
-                    })}
-                </select>
-                <select onChange=${(e) => setLanguage(e.target.value)}>
-                    ${languages.map((language) => {
-                      return html`<option value=${language}>${language}</option>`
-                    })}
-                </select>
-                <hr/>
-                ${exampleQuestions.map((question) => {
-                  return html`<button onClick=${() => sendChatMessage(question)}>${question}</button>`
-                })}
-                <hr/>
-                <span>
-                    ${output}
-                </span>
-            </div>
+          <div>
+            <input
+              type="text"
+              id="chat-input"
+              value=${message}
+              onInput=${handleInput}
+            />
+            <button onClick=${clicked}>Go</button>
+            <br />
+            <select onChange=${(e) => setPersona(e.target.value)}>
+              ${personas.map((persona) => {
+                return html`<option value=${persona}>${persona}</option>`;
+              })}
+            </select>
+            <select onChange=${(e) => setLanguage(e.target.value)}>
+              ${languages.map((language) => {
+                return html`<option value=${language}>${language}</option>`;
+              })}
+            </select>
+            <hr />
+            ${exampleQuestions.map((question) => {
+              return html`<button onClick=${() => sendChatMessage(question)}>
+                ${question}
+              </button>`;
+            })}
+            <hr />
+            <span> ${output} </span>
+          </div>
         `;
       }
 
       render(html`<${App} name="World" />`, document.body);
     </script>
 
-    <link href="index.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Jost&family=Raleway&display=swap" rel="stylesheet">
+    <link href="index.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Jost&family=Raleway&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+      }
     </style>
-    <script>
-    </script>
-</head>
-<body>
-<main>
-</main>
-</body>
+    <script></script>
+  </head>
+  <body>
+    <main></main>
+  </body>
 </html>
