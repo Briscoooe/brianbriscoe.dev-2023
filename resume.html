@@ -7,6 +7,9 @@
     />
     <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
+    <link href="index.css" rel="stylesheet" />
+    <script src="components/header-component.js"></script>
+    <script src="components/popup-component.js"></script>
     <script type="module">
       import { h, render } from "https://esm.sh/preact";
       import { useState, useEffect } from "https://esm.sh/preact/hooks";
@@ -91,24 +94,13 @@
         `;
       }
 
-      render(html`<${App} name="World" />`, document.body);
+      render(html`<${App} name="World" />`, document.getElementById("app"));
     </script>
-
-    <link href="index.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter&family=Jost&family=Raleway&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
-    </style>
-    <script></script>
   </head>
   <body>
-    <main></main>
-  </body>
+    <main>
+        <header-component></header-component>
+        <div id="app"></div>
+    </main>
+</body>
 </html>
