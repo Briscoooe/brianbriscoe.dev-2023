@@ -8,11 +8,49 @@
     <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
     <link href="index.css" rel="stylesheet" />
+    <style>
+      #app {
+        font-size: 1rem;
+      }
+      #output {
+        font-family: Inter, sans-serif;
+      }
+      button {
+        margin: 0.5rem 0;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        background-color: #444e60;
+        color: white;
+        cursor: pointer;
+      }
+      button:disabled {
+        background-color: #ccc;
+        color: white;
+        cursor: not-allowed;
+      }
+      input {
+        margin: 0.5rem 0;
+        font-size: 1.25rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        background-color: white;
+      }
+      select {
+        margin: 0.5rem 0;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        font-size: 1.25rem;
+      }
+    </style>
     <script src="components/header-component.js"></script>
     <script src="components/popup-component.js"></script>
     <script type="module">
       import { h, render } from "https://esm.sh/preact";
-      import { useState, useEffect } from "https://esm.sh/preact/hooks";
+      import { useState } from "https://esm.sh/preact/hooks";
       import htm from "https://esm.sh/htm";
       const apiUrl = "https://resumai.fly.dev";
 
@@ -25,13 +63,60 @@
       const personas = ["normal", "friendly", "poet", "rapper"];
       const languages = ["en", "es", "fr", "de", "it", "pt"];
 
-      function App(props) {
+      function ExampleQuestion(props) {
+        const { question, onClick } = props;
+        return html`<button onClick=${() => onClick(question)}>
+          ${question}
+        </button>`;
+      }
+
+      function LoadingSpinner() {
+        return html`<svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <style>
+            .spinner_qM83 {
+              animation: spinner_8HQG 1.05s infinite;
+            }
+            .spinner_oXPr {
+              animation-delay: 0.1s;
+            }
+            .spinner_ZTLf {
+              animation-delay: 0.2s;
+            }
+            @keyframes spinner_8HQG {
+              0%,
+              57.14% {
+                animation-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+                transform: translate(0);
+              }
+              28.57% {
+                animation-timing-function: cubic-bezier(0.33, 0, 0.66, 0.33);
+                transform: translateY(-6px);
+              }
+              100% {
+                transform: translate(0);
+              }
+            }
+          </style>
+          <circle class="spinner_qM83" cx="4" cy="12" r="3" />
+          <circle class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3" />
+          <circle class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3" />
+        </svg>`;
+      }
+
+      function App() {
         const [output, setOutput] = useState("");
         const [message, setMessage] = useState("");
         const [persona, setPersona] = useState("normal");
         const [language, setLanguage] = useState("en");
+        const [isLoading, setIsLoading] = useState(false);
         const sendChatMessage = (message) => {
           setOutput("");
+          setIsLoading(true);
           fetch(
             `${apiUrl}/chat?${new URLSearchParams({
               message,
@@ -52,6 +137,7 @@
               str += value;
               setOutput(str);
             }
+            setIsLoading(false);
           });
         };
         const clicked = () => {
@@ -63,13 +149,23 @@
         };
 
         return html`
-          <div>
-            <input
-              type="text"
-              value=${message}
-              onInput=${handleInput}
-            />
-            <button onClick=${clicked}>Go</button>
+          <div style="display: flex;flex-direction: column">
+            <a href="https://github.com/briscoooe/resumai">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+            <input type="text" value=${message} onInput=${handleInput} />
+            <button disabled=${message.length < 5} onClick=${clicked}>
+              Go
+            </button>
             <br />
             <select onChange=${(e) => setPersona(e.target.value)}>
               ${personas.map((persona) => {
@@ -82,24 +178,29 @@
               })}
             </select>
             <hr />
+            <h3>Example questions</h3>
             ${exampleQuestions.map((question) => {
-              return html`<button onClick=${() => sendChatMessage(question)}>
-                ${question}
-              </button>`;
+              return html`
+                <${ExampleQuestion}
+                  question=${question}
+                  onClick=${sendChatMessage}
+                />
+              `;
             })}
             <hr />
-            <span> ${output} </span>
+            <span> ${isLoading ? html`<${LoadingSpinner} />` : ""} </span>
+            <span id="output"> ${output} </span>
           </div>
         `;
       }
 
-      render(html`<${App} name="World" />`, document.getElementById("app"));
+      render(html`<${App} />`, document.getElementById("app"));
     </script>
   </head>
   <body>
     <main>
-        <header-component></header-component>
-        <div id="app"></div>
+      <header-component></header-component>
+      <div id="app"></div>
     </main>
-</body>
+  </body>
 </html>
