@@ -8,8 +8,8 @@
     <script type="module">
       import { h, Component, render } from 'https://esm.sh/preact';
       import { useState, useEffect } from 'https://esm.sh/preact/hooks';
-
       import htm from 'https://esm.sh/htm';
+      const apiUrl = "https://resumai.fly.dev";
 
 
       const html = htm.bind(h);
@@ -32,11 +32,11 @@
         const [language, setLanguage] = useState("en")
         const sendChatMessage = (message) => {
           setOutput("")
-          fetch("//localhost:8000/chat?" + new URLSearchParams({
+          fetch(`${apiUrl}/chat?${new URLSearchParams({
             message,
             persona,
             language
-          }), {
+          })}`, {
             method: "GET",
           }).then(async (response) => {
             const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
