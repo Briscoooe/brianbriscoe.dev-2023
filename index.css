@@ -12,6 +12,10 @@
   a:hover {
     color: #7f7f7f;
   }
+  img {
+    color: red;
+    fill: red;
+  }
   .title {
     color: #2f2f2f;
   }

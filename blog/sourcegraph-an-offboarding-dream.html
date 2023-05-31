@@ -1,34 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset="utf-8"/>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta charset="utf-8" />
     <title>Sourcegraph - An off-boarding dream</title>
-    <link href="../index.css" rel="stylesheet">
+    <link href="../index.css" rel="stylesheet" />
     <script src="../components/header-component.js"></script>
-</head>
-<body>
-<main>
-    <header-component></header-component>
-    <section>
+  </head>
+  <body>
+    <main>
+      <header-component></header-component>
+      <section>
         <h1>Sourcegraph - An off-boarding dream</h1>
-        <p>
-            December 15th, 2022
-        </p>
-        <i>Originally posted on <a href="https://dev.to/briscoooe/sourcegraph-an-off-boarding-dream-366e">dev.to</a></i>
+        <p>December 15th, 2022</p>
+        <i
+          >Originally posted on
+          <a
+            href="https://dev.to/briscoooe/sourcegraph-an-off-boarding-dream-366e"
+            >dev.to</a
+          ></i
+        >
         <article class="blog-post">
-            <p>Sourcegraph is a code-intelligence platform for helping you "understand, fix, and automate across all your code". There are many uses cases for it, such as large-scale code changes, onboarding new hires, better code reviews, and static code analysis. A less common use case which I'd like to highlight in this article is off-boarding.</p>
-            <p>I discovered Sourcegraph not long before I left an old job where, at the time, I was responsible for managing a couple hundred AWS Lambda functions. Each was self-contained and had its own Git repo. They each served different purposes but one thing they all had in common was sending Slack notifications throughout their lifecycles so the relevant business functions could be informed of events happening across the platform. Any given day there would be hundreds of messages spread across various channels.</p>
-            <p>When it was my time to leave the company, I realized that nobody knew where all of these notifications were coming from except me. This was a problem, as it meant that whoever was to inherit my work would have no idea how to maintain these services. At times a notification would come in and even I wouldn't know where it was coming from. My solution was to open my entire <code>~/Code</code> directory in a new VS Code window and search for a specific string that the message contained. This was a time-consuming process as the search performance was slow across such a large number of repos and it also depended on me having the correct repo locally.</p>
-            <p>To add to that, the search output and filtering options in VS code are pretty limited. Using the <a href="https://github.com/calcom/cal.com">cal.com</a> repo  as an example, here is VS code's search for <code>"user."</code> . </p>
-            <p class="blog-post-image"><img alt="VS Code's source search" src="https://i.imgur.com/Gks8bCp.png" /></p>
-            <p>One day by chance, not long before I was due to leave the company, I listened to <a href="https://changelog.com/founderstalk/81">Quinn Slack talking about Sourcegraph on the Founders Talk podcast</a>  and decided to give it a try.  The setup as super easy - I just spun up an EC2 instance and ran a <a href="https://docs.sourcegraph.com/admin/deploy/docker-single-container#installation">with a single Docker command</a>, connected my team's Bitbucket organization and Sourcegraph was up and running. </p>
-            <p>Instantly, I had searchability for all notification messages across every repo in the company. With this new superpower, anyone on the team could search for a message string and find the corresponding repo, in a sense making the entire notification system self-documenting. This simplified my handover process massively as it meant the guys who would take over these services no longer had to rely on me to identify them or spend time trying to figure out where they came from.</p>
-            <p>Here is Sourcegraph's search output for the same search query I mentioned earlier. In addition to the common search operators, some extra niceties include filtering by file extension, programming language, and even by Git branches and history.</p>
-            <p class="blog-post-image"><img style="width: 100%" alt="Sourcegraph search output" src="https://i.imgur.com/i74NbcQ.png" /></p>
-            <p>Once I showed the team they fell in love with it and became a part of everyones normal workflow. Sourcegraph solved another problem for us that I hadn't thought of originally but upon seeing the power of it became so obvious: removing legacy code. We had a lot of old code, properties, database columns etc. that we weren't 100% sure weren't being used so didn't want to risk removing. With Sourcegraph's search we could instantly check any usages of any of these properties across our entire infrastructure and make an easy decision on whether it was safe to remove.</p>
-            <p>Both of these wins were within a day or two of having installed Sourcegraph, and that's only scratching the surface of what it can do. If you haven't already, I can't recommend enough trying it out, it's free!</p>
-    </section>
-</main>
-</body>
+          <p>
+            Sourcegraph is a code-intelligence platform for helping you
+            "understand, fix, and automate across all your code". There are many
+            uses cases for it, such as large-scale code changes, onboarding new
+            hires, better code reviews, and static code analysis. A less common
+            use case which I'd like to highlight in this article is
+            off-boarding.
+          </p>
+          <p>
+            I discovered Sourcegraph not long before I left an old job where, at
+            the time, I was responsible for managing a couple hundred AWS Lambda
+            functions. Each was self-contained and had its own Git repo. They
+            each served different purposes but one thing they all had in common
+            was sending Slack notifications throughout their lifecycles so the
+            relevant business functions could be informed of events happening
+            across the platform. Any given day there would be hundreds of
+            messages spread across various channels.
+          </p>
+          <p>
+            When it was my time to leave the company, I realized that nobody
+            knew where all of these notifications were coming from except me.
+            This was a problem, as it meant that whoever was to inherit my work
+            would have no idea how to maintain these services. At times a
+            notification would come in and even I wouldn't know where it was
+            coming from. My solution was to open my entire
+            <code>~/Code</code> directory in a new VS Code window and search for
+            a specific string that the message contained. This was a
+            time-consuming process as the search performance was slow across
+            such a large number of repos and it also depended on me having the
+            correct repo locally.
+          </p>
+          <p>
+            To add to that, the search output and filtering options in VS code
+            are pretty limited. Using the
+            <a href="https://github.com/calcom/cal.com">cal.com</a> repo as an
+            example, here is VS code's search for <code>"user."</code> .
+          </p>
+          <p class="blog-post-image">
+            <img
+              alt="VS Code's source search"
+              src="https://i.imgur.com/Gks8bCp.png"
+            />
+          </p>
+          <p>
+            One day by chance, not long before I was due to leave the company, I
+            listened to
+            <a href="https://changelog.com/founderstalk/81"
+              >Quinn Slack talking about Sourcegraph on the Founders Talk
+              podcast</a
+            >
+            and decided to give it a try. The setup as super easy - I just spun
+            up an EC2 instance and ran a
+            <a
+              href="https://docs.sourcegraph.com/admin/deploy/docker-single-container#installation"
+              >with a single Docker command</a
+            >, connected my team's Bitbucket organization and Sourcegraph was up
+            and running.
+          </p>
+          <p>
+            Instantly, I had searchability for all notification messages across
+            every repo in the company. With this new superpower, anyone on the
+            team could search for a message string and find the corresponding
+            repo, in a sense making the entire notification system
+            self-documenting. This simplified my handover process massively as
+            it meant the guys who would take over these services no longer had
+            to rely on me to identify them or spend time trying to figure out
+            where they came from.
+          </p>
+          <p>
+            Here is Sourcegraph's search output for the same search query I
+            mentioned earlier. In addition to the common search operators, some
+            extra niceties include filtering by file extension, programming
+            language, and even by Git branches and history.
+          </p>
+          <p class="blog-post-image">
+            <img
+              style="width: 100%"
+              alt="Sourcegraph search output"
+              src="https://i.imgur.com/i74NbcQ.png"
+            />
+          </p>
+          <p>
+            Once I showed the team they fell in love with it and became a part
+            of everyones normal workflow. Sourcegraph solved another problem for
+            us that I hadn't thought of originally but upon seeing the power of
+            it became so obvious: removing legacy code. We had a lot of old
+            code, properties, database columns etc. that we weren't 100% sure
+            weren't being used so didn't want to risk removing. With
+            Sourcegraph's search we could instantly check any usages of any of
+            these properties across our entire infrastructure and make an easy
+            decision on whether it was safe to remove.
+          </p>
+          <p>
+            Both of these wins were within a day or two of having installed
+            Sourcegraph, and that's only scratching the surface of what it can
+            do. If you haven't already, I can't recommend enough trying it out,
+            it's free!
+          </p>
+        </article>
+      </section>
+    </main>
+  </body>
 </html>
