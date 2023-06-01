@@ -566,6 +566,10 @@ video {
   height: calc(100svh - 120px);
 }
 
+.h-\[calc\(100lvh-120px\)\] {
+  height: calc(100lvh - 120px);
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -1009,6 +1013,10 @@ code {
 
   .md\:h-\[calc\(100svh-160px\)\] {
     height: calc(100svh - 160px);
+  }
+
+  .md\:h-\[calc\(100lvh-160px\)\] {
+    height: calc(100lvh - 160px);
   }
 
   .md\:flex-row {
