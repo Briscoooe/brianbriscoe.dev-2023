@@ -52,8 +52,6 @@ body {
   margin: auto;
   display: block;
   padding: 1em;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
 }
 
 .title {

@@ -558,8 +558,8 @@ video {
   height: 1.5rem;
 }
 
-.h-\[calc\(100vh-120px\)\] {
-  height: calc(100vh - 120px);
+.h-\[calc\(100svh-120px\)\] {
+  height: calc(100svh - 120px);
 }
 
 .w-6 {
@@ -814,8 +814,6 @@ body {
   margin: auto;
   display: block;
   padding: 1em;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
 }
 
 .title {
@@ -991,8 +989,8 @@ code {
 }
 
 @media (min-width: 768px) {
-  .md\:h-\[calc\(100vh-160px\)\] {
-    height: calc(100vh - 160px);
+  .md\:h-\[calc\(100svh-160px\)\] {
+    height: calc(100svh - 160px);
   }
 
   .md\:flex-row {
