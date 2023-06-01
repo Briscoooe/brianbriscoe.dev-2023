@@ -14,8 +14,7 @@
       import { h, render } from "https://esm.sh/preact";
       import { useState, useEffect } from "https://esm.sh/preact/hooks";
       import htm from "https://esm.sh/htm";
-      // const apiUrl = "https://resumai.fly.dev";
-      const apiUrl = "http://localhost:8000";
+      const apiUrl = "https://resumai.fly.dev";
 
       const html = htm.bind(h);
       const exampleQuestions = [
@@ -23,8 +22,22 @@
         "What technologies does Brian know?",
         "How many years of experience does Brian have?",
       ];
-      const personas = ["normal", "friendly", "poet", "rapper"];
-      const languages = ["en", "es", "fr", "de", "it", "pt"];
+      // const personas = ["normal", "friendly", "poet", "rapper"];
+      const personas = [
+        { label: "Normal", value: "normal" },
+        { label: "Friendly", value: "friendly" },
+        { label: "Poet", value: "poet" },
+        { label: "Rapper", value: "rapper" },
+      ];
+      // const languages = ["en", "es", "fr", "de", "it", "pt"];
+      const languages = [
+        { label: "English 🇬🇧", value: "en" },
+        { label: "Spanish 🇪🇸", value: "es" },
+        { label: "French 🇫🇷", value: "fr" },
+        { label: "German 🇩🇪", value: "de" },
+        { label: "Italian 🇮🇹", value: "it" },
+        { label: "Portuguese 🇵🇹", value: "pt" },
+      ];
 
       function ExampleQuestion(props) {
         const { question, onClick } = props;
@@ -96,41 +109,72 @@
         `;
       }
 
+      // function ConfigurationSelect(props) {
+      //   const { options, selected, onChange } = props;
+      //   return html`
+      //     <div class="flex flex-col">
+      //       <label class="text-sm font-medium">${label}</label>
+      //       <select
+      //         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border-slate-300 focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition sm:text-sm rounded-md"
+      //         value=${selected}
+      //         onChange=${(e) => onChange(e.target.value)}
+      //       >
+      //         ${options.map((option) => {
+      //           return html`<option value=${option.value}>
+      //             ${option.label}
+      //           </option>`;
+      //         })}
+      //       </select>
+      //     </div>
+      //   `;
+      // }
+
       function ChatMessageInput(props) {
-        const { message, handleInput, clicked } = props;
+        const { message, handleInput, clicked, persona, setPersona, language, setLanguage } = props;
         return html`
-          <div
-            class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
-          >
-            <input
-              class="w-full focus:outline-none focus:ring-0 bg-transparent"
-              placeholder="Summarise Brian's resume"
-              type="text"
-              value=${message}
-              onInput=${handleInput}
-              onkeydown=${(e) => {
-                if (e.key === "Enter") {
-                  clicked();
-                }
-              }}
-            />
-            <button class="focus:outline-none focus:ring-0" onClick=${clicked}>
-              <img
-                height="24"
-                width="24"
-                class="invert-0"
-                src="./assets/airplane.svg"
-                alt="send"
+          <div class="flex flex-col">
+            <div
+              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
+            >
+              <input
+                class="w-full focus:outline-none focus:ring-0 bg-transparent"
+                placeholder="Summarise Brian's resume"
+                type="text"
+                value=${message}
+                onInput=${handleInput}
+                onkeydown=${(e) => {
+                  if (e.key === "Enter") {
+                    clicked();
+                  }
+                }}
               />
-            </button>
+              <button
+                class="focus:outline-none focus:ring-0"
+                onClick=${clicked}
+              >
+                <img
+                  height="24"
+                  width="24"
+                  class="invert-0"
+                  src="./assets/airplane.svg"
+                  alt="send"
+                />
+              </button>
+            </div>
           </div>
         `;
       }
 
       function App() {
         const [message, setMessage] = useState("");
-        const [persona, setPersona] = useState("normal");
-        const [language, setLanguage] = useState("en");
+        const [persona, setPersona] = useState({
+          label: "Normal",
+          value: "normal",
+        });
+        const [language, setLanguage] = useState({
+          label: "English 🇬🇧",
+          value: "en",
+        });
         const [isLoading, setIsLoading] = useState(false);
         const [history, setHistory] = useState([]);
 
@@ -143,8 +187,8 @@
           const response = await fetch(
             `${apiUrl}/chat?${new URLSearchParams({
               message,
-              persona,
-              language,
+              persona: persona.value,
+              language: language.value,
             })}`,
             {
               method: "GET",
@@ -210,6 +254,10 @@
               message=${message}
               handleInput=${handleInput}
               clicked=${clicked}
+              persona=${persona}
+              setPersona=${setPersona}
+              language=${language}
+                setLanguage=${setLanguage}
             />`}
           </div>
         `;
