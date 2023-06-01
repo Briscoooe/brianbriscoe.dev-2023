@@ -39,7 +39,7 @@
       function WelcomeState(props) {
         const { sendChatMessage } = props;
         return html`<div class="text-center">
-          <span class="mb-2 text-lg">
+          <span class="mb-2 text-lg font-medium">
             Ask me anything about Brian's resume
           </span>
           <div
@@ -61,69 +61,69 @@
       };
 
       function ChatMessage(props) {
-        const { message, actor } = props;
+        const { message, actor, isLoading } = props;
         const classes =
-          actor === "bot" ? "bg-stone-200" : "bg-stone-100 flex-row-reverse";
+          actor === "bot"
+            ? "bg-stone-200"
+            : "bg-stone-100 flex-row-reverse text-right";
         return html`<div
           class="px-4 py-8 font-medium rounded-md flex flex-row gap-2 ${classes}"
         >
-          <img alt="avatar" class="w-6 h-6" src="${chatMessageAvatarMap[actor]}" />
+          <img
+            alt="avatar"
+            class="w-6 h-6"
+            src="${chatMessageAvatarMap[actor]}"
+          />
           <div>${message}</div>
         </div>`;
       }
 
       function ChatMessageList(props) {
-        const { output, isLoading, history } = props;
-        return html`            <div class="grow overflow-y-scroll">
-              <span>
-                ${isLoading
-                ? html`<img alt="spinner" src="./assets/spinner.svg" />`
-                : ""}
-              </span>
-              <span> ${output} </span>
-              <div class="space-y-2">
-                ${history.map((item) => {
-          return html`<${ChatMessage}
-                    message=${item.message}
-                    actor=${item.actor}
-                  />`;
-        })}
-              </div>
+        const { isLoading, history } = props;
+        return html`
+          <div class="grow overflow-y-scroll">
+            <div class="space-y-2">
+              ${history.map((item) => {
+                return html`<${ChatMessage}
+                  message=${item.message}
+                  actor=${item.actor}
+                  isLoading=${isLoading}
+                />`;
+              })}
             </div>
-`
+          </div>
+        `;
       }
 
       function ChatMessageInput(props) {
         const { message, handleInput, clicked } = props;
-        return html`            <div
-              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-stone-900"
-            >
-              <input
-                class="w-full focus:outline-none focus:ring-0"
-                placeholder="Summarise Brian's resume"
-                type="text"
-                value=${message}
-                onInput=${handleInput}
-                onkeydown=${(e) => {
-          if (e.key === "Enter") {
-            clicked();
-          }
-        }}
+        return html`
+          <div
+            class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-stone-900"
+          >
+            <input
+              class="w-full focus:outline-none focus:ring-0"
+              placeholder="Summarise Brian's resume"
+              type="text"
+              value=${message}
+              onInput=${handleInput}
+              onkeydown=${(e) => {
+                if (e.key === "Enter") {
+                  clicked();
+                }
+              }}
+            />
+            <button class="focus:outline-none focus:ring-0" onClick=${clicked}>
+              <img
+                height="24"
+                width="24"
+                class=""
+                src="./assets/airplane.svg"
+                alt="send"
               />
-              <button
-                class="focus:outline-none focus:ring-0"
-                onClick=${clicked}
-              >
-                <img
-                  height="24"
-                  width="24"
-                  class=""
-                  src="./assets/airplane.svg"
-                  alt="send"
-                />
-              </button>
-            </div>
-`;
+            </button>
+          </div>
+        `;
       }
 
       function App() {
@@ -134,14 +134,10 @@
         const [isLoading, setIsLoading] = useState(false);
         const [history, setHistory] = useState([]);
 
-        // this has to be done this way due to Preact weirdness with useState
-        const appendHistory = (currentHistory, message, actor) => {
-          setHistory([...currentHistory, { message, actor }]);
-        };
         const sendChatMessage = async (message) => {
           const currentHistory = [...history];
-          appendHistory(currentHistory, message, "user");
           currentHistory.push({ message, actor: "user" });
+          setHistory(currentHistory);
           setOutput("");
           setMessage("");
           setIsLoading(true);
@@ -159,14 +155,19 @@
             .pipeThrough(new TextDecoderStream())
             .getReader();
           let str = "";
+
+          const historyRecord = { message: "", actor: "bot" };
+          currentHistory.push(historyRecord);
+          setHistory(currentHistory);
           while (true) {
             const { value, done } = await reader.read();
             if (done) break;
             str += value;
-            setOutput(str);
+            historyRecord.message = str;
+            const newHistory = [...currentHistory];
+            setHistory(newHistory);
           }
           setIsLoading(false);
-          appendHistory(currentHistory, str, "bot");
         };
         const clicked = () => {
           sendChatMessage(message);
@@ -198,7 +199,6 @@
               ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
               : ""}
             ${html`<${ChatMessageList}
-              output=${output}
               isLoading=${isLoading}
               history=${history}
             />`}
