@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+    />
+    <meta charset="utf-8" />
+    <title>Brian Briscoe - Resume</title>
+    <link href="../output.css" rel="stylesheet" />
+    <script src="../components/header-component.js"></script>
+    <script src="../components/popup-component.js"></script>
+    <script type="module">
+      import { h, render } from "https://esm.sh/preact";
+      import { useState, useEffect } from "https://esm.sh/preact/hooks";
+      import htm from "https://esm.sh/htm";
+      const apiUrl = "https://resumai.fly.dev";
+      const html = htm.bind(h);
+      function App() {
+
+        return html`
+          <div
+            class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-between"
+          >
+          hello
+          </div>
+        `;
+      }
+
+      render(html`<${App} />`, document.getElementById("app"));
+    </script>
+</head>
+<body>
+<main>
+    <header-component></header-component>
+    <div id="app"></div>
+</main>
+</body>
+</html>

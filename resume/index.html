@@ -7,9 +7,9 @@
     />
     <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
-    <link href="output.css" rel="stylesheet" />
-    <script src="components/header-component.js"></script>
-    <script src="components/popup-component.js"></script>
+    <link href="../output.css" rel="stylesheet" />
+    <script src="../components/header-component.js"></script>
+    <script src="../components/popup-component.js"></script>
     <script type="module">
       import { h, render } from "https://esm.sh/preact";
       import { useState, useEffect } from "https://esm.sh/preact/hooks";
@@ -18,9 +18,9 @@
 
       const html = htm.bind(h);
       const exampleQuestions = [
-        "Where did Brian go to school?",
-        "What technologies does Brian know?",
-        "How many years of experience does Brian have?",
+        "What are Brian's areas of expertise?",
+        "Does Brian have any open source contributions?",
+        "What are some of Brian's personal projects?",
       ];
       // const personas = ["normal", "friendly", "poet", "rapper"];
       const personas = [
@@ -52,11 +52,11 @@
       function WelcomeState(props) {
         const { sendChatMessage } = props;
         return html`<div class="text-center">
-          <span class="mb-2 text-lg font-medium">
+          <span class="text-lg font-medium">
             Ask me anything about Brian's resume
           </span>
           <div
-            class="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2"
+            class="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2 mb-2"
           >
             ${exampleQuestions.map((question) => {
               return html`<${ExampleQuestion}
@@ -69,8 +69,8 @@
       }
 
       const chatMessageAvatarMap = {
-        user: "./assets/user.svg",
-        bot: "./assets/magic.svg",
+        user: "../assets/user.svg",
+        bot: "../assets/magic.svg",
       };
 
       function ChatMessage(props) {
@@ -142,30 +142,30 @@
         return html`
           <div class="flex flex-col">
             <div
-              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
+                    class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
             >
               <input
-                class="w-full focus:outline-none focus:ring-0 bg-transparent"
-                placeholder="Summarise Brian's resume"
-                type="text"
-                value=${message}
-                onInput=${handleInput}
-                onkeydown=${(e) => {
-                  if (e.key === "Enter") {
-                    clicked();
-                  }
-                }}
+                      class="w-full focus:outline-none focus:ring-0 bg-transparent"
+                      placeholder="Summarise Brian's resume"
+                      type="text"
+                      value=${message}
+                      onInput=${handleInput}
+                      onkeydown=${(e) => {
+                        if (e.key === "Enter") {
+                          clicked();
+                        }
+                      }}
               />
               <button
-                class="focus:outline-none focus:ring-0"
-                onClick=${clicked}
+                      class="focus:outline-none focus:ring-0"
+                      onClick=${clicked}
               >
                 <img
-                  height="24"
-                  width="24"
-                  class="invert-0"
-                  src="./assets/airplane.svg"
-                  alt="send"
+                        height="24"
+                        width="24"
+                        class="invert-0"
+                        src="../assets/airplane.svg"
+                        alt="send"
                 />
               </button>
             </div>
