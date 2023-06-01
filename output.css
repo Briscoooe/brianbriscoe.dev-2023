@@ -562,6 +562,10 @@ video {
   height: calc(100vh - 120px);
 }
 
+.h-\[calc\(100svh-120px\)\] {
+  height: calc(100svh - 120px);
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -1001,6 +1005,10 @@ code {
 @media (min-width: 768px) {
   .md\:h-\[calc\(100vh-160px\)\] {
     height: calc(100vh - 160px);
+  }
+
+  .md\:h-\[calc\(100svh-160px\)\] {
+    height: calc(100svh - 160px);
   }
 
   .md\:flex-row {
