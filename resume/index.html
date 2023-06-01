@@ -130,7 +130,7 @@
             ${!isLoading && history.length > 0
               ? html`<button
                   class="rounded-md bg-slate-50 dark:bg-slate-600 px-3 py-4 mt-2 w-full border-2 border-slate-200 dark:border-slate-400"
-                    onClick=${startAgain}
+                  onClick=${startAgain}
                 >
                   Start again
                 </button>`
@@ -221,7 +221,7 @@
           const chatWindowElement = document.getElementById(
             "chat-message-log-end"
           );
-          chatWindowElement.scrollIntoView({ behavior: "smooth"});
+          chatWindowElement.scrollIntoView({ behavior: "smooth" });
         };
 
         const sendChatMessage = async (message) => {
