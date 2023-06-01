@@ -1,5 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --page-width: 700px;
+  --page-width: 800px;
 }
 
 @media (prefers-color-scheme: light) {

@@ -7,44 +7,7 @@
     />
     <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
-    <link href="index.css" rel="stylesheet" />
-    <style>
-      #app {
-        font-size: 1rem;
-      }
-      #output {
-        font-family: Inter, sans-serif;
-      }
-      .rounded {
-        border-radius: 0.5rem;
-      }
-      button {
-        font-size: 1.2rem;
-        padding: 0.75rem 1rem;
-        border: 1px solid #ccc;
-        background-color: #444e60;
-        color: white;
-        cursor: pointer;
-      }
-      button:disabled {
-        background-color: #ccc;
-        color: white;
-        cursor: not-allowed;
-      }
-      input {
-        width: 100%;
-        font-size: 1.25rem;
-        padding: 0.75rem 1rem;
-        border: 1px solid #ccc;
-        background-color: white;
-      }
-      select {
-        margin: 0.5rem 0;
-        padding: 0.5rem 1rem;
-        border: 1px solid #ccc;
-        font-size: 1.25rem;
-      }
-    </style>
+    <link href="output.css" rel="stylesheet" />
     <script src="components/header-component.js"></script>
     <script src="components/popup-component.js"></script>
     <script type="module">
@@ -69,13 +32,39 @@
         </button>`;
       }
 
+      const images = {
+        "user": "./assets/user.svg",
+        "bot": "./assets/magic.svg",
+      }
+
+      function ChatMessage(props) {
+        const { message, actor } = props;
+        const classes = actor === "bot" ? "bg-stone-200" : "bg-stone-100 flex-row-reverse";
+        return html`<div class="px-4 py-8 font-medium rounded-md flex flex-row gap-2 ${classes}">
+            <img
+              class="w-6 h-6"
+              src="${images[actor]}"
+            />
+          <div>${message}</div>
+        </div>`;
+      }
+
       function App() {
         const [output, setOutput] = useState("");
         const [message, setMessage] = useState("");
         const [persona, setPersona] = useState("normal");
         const [language, setLanguage] = useState("en");
         const [isLoading, setIsLoading] = useState(false);
-        const [history, setHistory] = useState([]);
+        const [history, setHistory] = useState([
+          {
+            message: "Hi, I'm Brian. Ask me anything about my career.",
+            actor: "bot",
+          },
+          {
+            message: "hello, how are you?",
+            actor: "user",
+          },
+        ]);
 
         // this has to be done this way due to Preact weirdness with useState
         const appendHistory = (currentHistory, message, actor) => {
@@ -134,47 +123,52 @@
         // </select>
         // <hr />
         return html`
-          <div style="display: flex;flex-direction: column">
+          <div class="font-sans">
+            <div>
+              <span>
+                ${isLoading
+                  ? html`<img alt="spinner" src="./assets/spinner.svg" />`
+                  : ""}
+              </span>
+              <span> ${output} </span>
+              <div class="space-y-2">
+                ${history.map((item) => {
+                  return html`<${ChatMessage}
+                    message=${item.message}
+                    actor=${item.actor}
+                  />`;
+                })}
+              </div>
+            </div>
+            <!-- Input -->
             <div
-              style="display: flex;flex-direction: row;justify-content: space-between;"
+              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 py-2 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-slate-900"
             >
               <input
+                class="w-full focus:outline-none focus:ring-0"
                 placeholder="Tell me about Brian"
                 type="text"
-                class="rounded"
                 value=${message}
                 onInput=${handleInput}
+                onkeydown=${(e) => {
+                  if (e.key === "Enter") {
+                    clicked();
+                  }
+                }}
               />
               <button
-                class="rounded"
-                style="margin-left: 1rem"
-                disabled=${message.length < 5}
+                class="focus:outline-none focus:ring-0"
                 onClick=${clicked}
               >
                 <img
                   height="24"
                   width="24"
+                  class=""
                   src="./assets/airplane.svg"
                   alt="send"
                 />
               </button>
             </div>
-            <span>
-              ${isLoading
-                ? html`<img alt="spinner" src="./assets/spinner.svg" />`
-                : ""}
-            </span>
-            <span id="output"> ${output} </span>
-            ${history.map((item) => {
-              return html`<div
-                style="display: flex;flex-direction: row;justify-content: space-between;"
-              >
-                <span style="color: ${item.actor === "user" ? "blue" : "red"}"
-                  >${item.actor}</span
-                >
-                <span>${item.message}</span>
-              </div>`;
-            })}
           </div>
         `;
       }
