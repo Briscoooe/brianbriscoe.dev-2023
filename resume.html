@@ -78,7 +78,7 @@
         </div>`;
       }
 
-      function ChatMessageList(props) {
+      function ChatMessageLog(props) {
         const { isLoading, history } = props;
         return html`
           <div class="grow overflow-y-scroll">
@@ -91,6 +91,7 @@
                 />`;
               })}
             </div>
+            <div id="chat-message-log-end"></div>
           </div>
         `;
       }
@@ -159,6 +160,8 @@
           const historyRecord = { message: "", actor: "bot" };
           currentHistory.push(historyRecord);
           setHistory(currentHistory);
+          const chatWindowElement = document.getElementById("chat-message-log-end");
+          console.log(chatWindowElement);
           while (true) {
             const { value, done } = await reader.read();
             if (done) break;
@@ -166,6 +169,7 @@
             historyRecord.message = str;
             const newHistory = [...currentHistory];
             setHistory(newHistory);
+            chatWindowElement.scrollIntoView({ behavior: "smooth" })
           }
           setIsLoading(false);
         };
@@ -198,7 +202,7 @@
             ${history.length === 0
               ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
               : ""}
-            ${html`<${ChatMessageList}
+            ${html`<${ChatMessageLog}
               isLoading=${isLoading}
               history=${history}
             />`}
