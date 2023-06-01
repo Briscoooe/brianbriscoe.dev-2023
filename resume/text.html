@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
     />
     <meta charset="utf-8" />
     <title>Brian Briscoe - Resume</title>
@@ -17,23 +17,22 @@
       const apiUrl = "https://resumai.fly.dev";
       const html = htm.bind(h);
       function App() {
-
         return html`
           <div
             class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-between"
           >
-          hello
+            hello
           </div>
         `;
       }
 
       render(html`<${App} />`, document.getElementById("app"));
     </script>
-</head>
-<body>
-<main>
-    <header-component></header-component>
-    <div id="app"></div>
-</main>
-</body>
+  </head>
+  <body>
+    <main>
+      <header-component></header-component>
+      <div id="app"></div>
+    </main>
+  </body>
 </html>

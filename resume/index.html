@@ -14,7 +14,8 @@
       import { h, render } from "https://esm.sh/preact";
       import { useState, useEffect } from "https://esm.sh/preact/hooks";
       import htm from "https://esm.sh/htm";
-      const apiUrl = "https://resumai.fly.dev";
+      // const apiUrl = "https://resumai.fly.dev";
+      const apiUrl = "http://localhost:8000";
 
       const html = htm.bind(h);
       const exampleQuestions = [
@@ -22,14 +23,19 @@
         "Does Brian have any open source contributions?",
         "What are some of Brian's personal projects?",
       ];
-      // const personas = ["normal", "friendly", "poet", "rapper"];
+      const topics = [
+        { label: "Experience", icon: "../assets/briefcase.svg" },
+        { label: "Tech", icon: "../assets/tech.svg" },
+        { label: "Education", icon: "../assets/education.svg" },
+        { label: "Personal projects", icon: "../assets/beaker.svg" },
+        { label: "Open source", icon: "../assets/star.svg" },
+      ];
       const personas = [
         { label: "Normal", value: "normal" },
         { label: "Friendly", value: "friendly" },
         { label: "Poet", value: "poet" },
         { label: "Rapper", value: "rapper" },
       ];
-      // const languages = ["en", "es", "fr", "de", "it", "pt"];
       const languages = [
         { label: "English 🇬🇧", value: "en" },
         { label: "Spanish 🇪🇸", value: "es" },
@@ -48,21 +54,38 @@
           "${question}"
         </button>`;
       }
+      //
+      // <div
+      //         className="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2 mb-2"
+      // >
+      //   ${exampleQuestions.map((question) => {
+      //   return html`<${ExampleQuestion}
+      //           question=${question}
+      //           onClick=${sendChatMessage}
+      //         />`;
+      // })}
+      // </div>
 
       function WelcomeState(props) {
         const { sendChatMessage } = props;
         return html`<div class="text-center">
           <span class="text-lg font-medium">
-            Ask me anything about Brian's resume
+            Ask me anything about Brian's resume, or pick a topic below:
           </span>
           <div
-            class="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2 mb-2"
+            class="flex flex-row flex-wrap gap-2 mt-2 text-sm items-center justify-center"
           >
-            ${exampleQuestions.map((question) => {
-              return html`<${ExampleQuestion}
-                question=${question}
-                onClick=${sendChatMessage}
-              />`;
+            ${topics.map((topic) => {
+              return html`<button
+                class="bg-slate-100 dark:bg-slate-600 px-3 py-4 rounded-md hover:bg-slate-200 dark:hover:bg-slate-500 transition flex flex-row space-x-1.5 items-center"
+                onClick=${() =>
+                  sendChatMessage(
+                    `Tell me about Brian's ${topic.label.toLowerCase()}`
+                  )}
+              >
+                <img alt="avatar" class="w-4 h-4" src="${topic.icon}" />
+                <span>${topic.label}</span>
+              </button>`;
             })}
           </div>
         </div>`;
@@ -87,12 +110,12 @@
             class="w-6 h-6"
             src="${chatMessageAvatarMap[actor]}"
           />
-          <div>${message}</div>
+          <md-block>${message}</md-block>
         </div>`;
       }
 
       function ChatMessageLog(props) {
-        const { isLoading, history } = props;
+        const { isLoading, history, startAgain } = props;
         return html`
           <div class="grow overflow-y-scroll">
             <div class="space-y-2">
@@ -104,6 +127,14 @@
                 />`;
               })}
             </div>
+            ${!isLoading && history.length > 0
+              ? html`<button
+                  class="rounded-md bg-slate-50 dark:bg-slate-600 px-3 py-4 mt-2 w-full border-2 border-slate-200 dark:border-slate-400"
+                    onClick=${startAgain}
+                >
+                  Start again
+                </button>`
+              : null}
             <div id="chat-message-log-end"></div>
           </div>
         `;
@@ -142,30 +173,30 @@
         return html`
           <div class="flex flex-col">
             <div
-                    class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
+              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
             >
               <input
-                      class="w-full focus:outline-none focus:ring-0 bg-transparent"
-                      placeholder="Summarise Brian's resume"
-                      type="text"
-                      value=${message}
-                      onInput=${handleInput}
-                      onkeydown=${(e) => {
-                        if (e.key === "Enter") {
-                          clicked();
-                        }
-                      }}
+                class="w-full focus:outline-none focus:ring-0 bg-transparent"
+                placeholder="Ask me anything"
+                type="text"
+                value=${message}
+                onInput=${handleInput}
+                onkeydown=${(e) => {
+                  if (e.key === "Enter") {
+                    clicked();
+                  }
+                }}
               />
               <button
-                      class="focus:outline-none focus:ring-0"
-                      onClick=${clicked}
+                class="focus:outline-none focus:ring-0"
+                onClick=${clicked}
               >
                 <img
-                        height="24"
-                        width="24"
-                        class="invert-0"
-                        src="../assets/airplane.svg"
-                        alt="send"
+                  height="24"
+                  width="24"
+                  class="invert-0"
+                  src="../assets/airplane.svg"
+                  alt="send"
                 />
               </button>
             </div>
@@ -185,6 +216,13 @@
         });
         const [isLoading, setIsLoading] = useState(false);
         const [history, setHistory] = useState([]);
+
+        const scrollIntoView = () => {
+          const chatWindowElement = document.getElementById(
+            "chat-message-log-end"
+          );
+          chatWindowElement.scrollIntoView({ behavior: "smooth"});
+        };
 
         const sendChatMessage = async (message) => {
           const currentHistory = [...history];
@@ -210,10 +248,6 @@
           const historyRecord = { message: "", actor: "bot" };
           currentHistory.push(historyRecord);
           setHistory(currentHistory);
-          const chatWindowElement = document.getElementById(
-            "chat-message-log-end"
-          );
-          console.log(chatWindowElement);
           while (true) {
             const { value, done } = await reader.read();
             if (done) break;
@@ -221,10 +255,17 @@
             historyRecord.message = str;
             const newHistory = [...currentHistory];
             setHistory(newHistory);
-            chatWindowElement.scrollIntoView({ behavior: "smooth" });
+            scrollIntoView();
           }
           setIsLoading(false);
         };
+
+        useEffect(() => {
+          if (!isLoading) {
+            scrollIntoView();
+          }
+        }, [isLoading]);
+
         const clicked = () => {
           sendChatMessage(message);
         };
@@ -244,6 +285,9 @@
               ${html`<${ChatMessageLog}
                 isLoading=${isLoading}
                 history=${history}
+                startAgain=${() => {
+                  setHistory([]);
+                }}
               />`}
             </div>
             ${html`<${ChatMessageInput}
