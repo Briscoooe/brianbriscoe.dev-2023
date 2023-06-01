@@ -72,6 +72,27 @@
         </div>`;
       }
 
+      function ChatMessageList(props) {
+        const { output, isLoading, history } = props;
+        return html`            <div class="grow overflow-y-scroll">
+              <span>
+                ${isLoading
+                ? html`<img alt="spinner" src="./assets/spinner.svg" />`
+                : ""}
+              </span>
+              <span> ${output} </span>
+              <div class="space-y-2">
+                ${history.map((item) => {
+          return html`<${ChatMessage}
+                    message=${item.message}
+                    actor=${item.actor}
+                  />`;
+        })}
+              </div>
+            </div>
+`
+      }
+
       function ChatMessageInput(props) {
         const { message, handleInput, clicked } = props;
         return html`            <div
@@ -176,23 +197,11 @@
             ${history.length === 0
               ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
               : ""}
-            <!-- Chat history -->
-            <div class="grow overflow-y-scroll">
-              <span>
-                ${isLoading
-                  ? html`<img alt="spinner" src="./assets/spinner.svg" />`
-                  : ""}
-              </span>
-              <span> ${output} </span>
-              <div class="space-y-2">
-                ${history.map((item) => {
-                  return html`<${ChatMessage}
-                    message=${item.message}
-                    actor=${item.actor}
-                  />`;
-                })}
-              </div>
-            </div>
+            ${html`<${ChatMessageList}
+              output=${output}
+              isLoading=${isLoading}
+              history=${history}
+            />`}
             ${html`<${ChatMessageInput}
               message=${message}
               handleInput=${handleInput}
