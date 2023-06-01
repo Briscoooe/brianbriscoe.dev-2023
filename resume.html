@@ -242,15 +242,19 @@
         // <hr />
         return html`
           <div
-            class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-center"
+            class="font-sans flex flex-col justify-between h-full"
           >
+          <div>
+
             ${history.length === 0
-              ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
-              : ""}
+                    ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
+                    : ""}
             ${html`<${ChatMessageLog}
               isLoading=${isLoading}
               history=${history}
             />`}
+</div>
+
             ${html`<${ChatMessageInput}
               message=${message}
               handleInput=${handleInput}
@@ -268,9 +272,9 @@
     </script>
   </head>
   <body>
-    <main>
+    <main class="flex flex-col h-[calc(100svh-30px)]">
       <header-component></header-component>
-      <div id="app"></div>
+      <div id="app" class="grow"></div>
     </main>
   </body>
 </html>

@@ -574,6 +574,34 @@ video {
   height: calc(100dvh - 120px);
 }
 
+.h-screen {
+  height: 100vh;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.h-\[calc\(100svh\)\] {
+  height: calc(100svh);
+}
+
+.h-\[calc\(100svh-10px\)\] {
+  height: calc(100svh - 10px);
+}
+
+.h-\[calc\(100svh-100px\)\] {
+  height: calc(100svh - 100px);
+}
+
+.h-\[calc\(100svh-20px\)\] {
+  height: calc(100svh - 20px);
+}
+
+.h-\[calc\(100svh-30px\)\] {
+  height: calc(100svh - 30px);
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -670,6 +698,11 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
 
 .px-3 {
@@ -1025,6 +1058,18 @@ code {
 
   .md\:h-\[calc\(100dvh-160px\)\] {
     height: calc(100dvh - 160px);
+  }
+
+  .md\:h-\[calc\(100svh-20\)\] {
+    height: calc(100svh - 20);
+  }
+
+  .md\:h-\[calc\(100svh-20px\)\] {
+    height: calc(100svh - 20px);
+  }
+
+  .md\:h-\[calc\(100svh-30px\)\] {
+    height: calc(100svh - 30px);
   }
 
   .md\:flex-row {
