@@ -130,7 +130,15 @@
       // }
 
       function ChatMessageInput(props) {
-        const { message, handleInput, clicked, persona, setPersona, language, setLanguage } = props;
+        const {
+          message,
+          handleInput,
+          clicked,
+          persona,
+          setPersona,
+          language,
+          setLanguage,
+        } = props;
         return html`
           <div class="flex flex-col">
             <div
@@ -230,13 +238,13 @@
             class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-between"
           >
             <div class="overflow-y-scroll">
-            ${history.length === 0
-              ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
-              : ""}
-            ${html`<${ChatMessageLog}
-              isLoading=${isLoading}
-              history=${history}
-            />`}
+              ${history.length === 0
+                ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
+                : ""}
+              ${html`<${ChatMessageLog}
+                isLoading=${isLoading}
+                history=${history}
+              />`}
             </div>
             ${html`<${ChatMessageInput}
               message=${message}
@@ -245,7 +253,7 @@
               persona=${persona}
               setPersona=${setPersona}
               language=${language}
-                setLanguage=${setLanguage}
+              setLanguage=${setLanguage}
             />`}
           </div>
         `;
