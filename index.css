@@ -51,7 +51,7 @@ body {
   max-width: var(--page-width);
   margin: auto;
   display: block;
-  padding: 1em;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .title {
