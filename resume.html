@@ -29,7 +29,7 @@
       function ExampleQuestion(props) {
         const { question, onClick } = props;
         return html`<button
-          class="bg-stone-100 px-3 py-4 rounded-md hover:bg-stone-200 transition w-full"
+          class="bg-slate-100 dark:bg-slate-600 px-3 py-4 rounded-md hover:bg-slate-200 dark:hover:bg-slate-500 transition w-full"
           onClick=${() => onClick(question)}
         >
           "${question}"
@@ -64,10 +64,10 @@
         const { message, actor, isLoading } = props;
         const classes =
           actor === "bot"
-            ? "bg-stone-200"
-            : "bg-stone-100 flex-row-reverse text-right";
+            ? "bg-slate-200 dark:bg-slate-700"
+            : "bg-slate-100 dark:bg-slate-600 flex-row-reverse text-right";
         return html`<div
-          class="px-4 py-8 font-medium rounded-md flex flex-row gap-2 ${classes}"
+          class="px-4 py-8 font-medium dark:font-normal rounded-md flex flex-row gap-2 ${classes}"
         >
           <img
             alt="avatar"
@@ -100,10 +100,10 @@
         const { message, handleInput, clicked } = props;
         return html`
           <div
-            class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-stone-900"
+            class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
           >
             <input
-              class="w-full focus:outline-none focus:ring-0"
+              class="w-full focus:outline-none focus:ring-0 bg-transparent"
               placeholder="Summarise Brian's resume"
               type="text"
               value=${message}
@@ -160,7 +160,9 @@
           const historyRecord = { message: "", actor: "bot" };
           currentHistory.push(historyRecord);
           setHistory(currentHistory);
-          const chatWindowElement = document.getElementById("chat-message-log-end");
+          const chatWindowElement = document.getElementById(
+            "chat-message-log-end"
+          );
           console.log(chatWindowElement);
           while (true) {
             const { value, done } = await reader.read();
@@ -169,7 +171,7 @@
             historyRecord.message = str;
             const newHistory = [...currentHistory];
             setHistory(newHistory);
-            chatWindowElement.scrollIntoView({ behavior: "smooth" })
+            chatWindowElement.scrollIntoView({ behavior: "smooth" });
           }
           setIsLoading(false);
         };
