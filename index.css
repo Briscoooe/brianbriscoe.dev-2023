@@ -98,9 +98,10 @@ header {
   max-width: var(--page-width);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   header {
     flex-direction: column;
+    margin: 0;
   }
 }
 

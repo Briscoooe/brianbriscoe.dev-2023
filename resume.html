@@ -12,9 +12,10 @@
     <script src="components/popup-component.js"></script>
     <script type="module">
       import { h, render } from "https://esm.sh/preact";
-      import { useState } from "https://esm.sh/preact/hooks";
+      import { useState, useEffect } from "https://esm.sh/preact/hooks";
       import htm from "https://esm.sh/htm";
-      const apiUrl = "https://resumai.fly.dev";
+      // const apiUrl = "https://resumai.fly.dev";
+      const apiUrl = "http://localhost:8000";
 
       const html = htm.bind(h);
       const exampleQuestions = [
@@ -27,26 +28,81 @@
 
       function ExampleQuestion(props) {
         const { question, onClick } = props;
-        return html`<button onClick=${() => onClick(question)}>
-          ${question}
+        return html`<button
+          class="bg-stone-100 px-3 py-4 rounded-md hover:bg-stone-200 transition w-full"
+          onClick=${() => onClick(question)}
+        >
+          "${question}"
         </button>`;
       }
 
-      const images = {
-        "user": "./assets/user.svg",
-        "bot": "./assets/magic.svg",
+      function WelcomeState(props) {
+        const { sendChatMessage } = props;
+        return html`<div class="text-center">
+          <span class="mb-2 text-lg">
+            Ask me anything about Brian's resume
+          </span>
+          <div
+            class="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2"
+          >
+            ${exampleQuestions.map((question) => {
+              return html`<${ExampleQuestion}
+                question=${question}
+                onClick=${sendChatMessage}
+              />`;
+            })}
+          </div>
+        </div>`;
       }
+
+      const chatMessageAvatarMap = {
+        user: "./assets/user.svg",
+        bot: "./assets/magic.svg",
+      };
 
       function ChatMessage(props) {
         const { message, actor } = props;
-        const classes = actor === "bot" ? "bg-stone-200" : "bg-stone-100 flex-row-reverse";
-        return html`<div class="px-4 py-8 font-medium rounded-md flex flex-row gap-2 ${classes}">
-            <img
-              class="w-6 h-6"
-              src="${images[actor]}"
-            />
+        const classes =
+          actor === "bot" ? "bg-stone-200" : "bg-stone-100 flex-row-reverse";
+        return html`<div
+          class="px-4 py-8 font-medium rounded-md flex flex-row gap-2 ${classes}"
+        >
+          <img alt="avatar" class="w-6 h-6" src="${chatMessageAvatarMap[actor]}" />
           <div>${message}</div>
         </div>`;
+      }
+
+      function ChatMessageInput(props) {
+        const { message, handleInput, clicked } = props;
+        return html`            <div
+              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-stone-900"
+            >
+              <input
+                class="w-full focus:outline-none focus:ring-0"
+                placeholder="Summarise Brian's resume"
+                type="text"
+                value=${message}
+                onInput=${handleInput}
+                onkeydown=${(e) => {
+          if (e.key === "Enter") {
+            clicked();
+          }
+        }}
+              />
+              <button
+                class="focus:outline-none focus:ring-0"
+                onClick=${clicked}
+              >
+                <img
+                  height="24"
+                  width="24"
+                  class=""
+                  src="./assets/airplane.svg"
+                  alt="send"
+                />
+              </button>
+            </div>
+`;
       }
 
       function App() {
@@ -55,16 +111,7 @@
         const [persona, setPersona] = useState("normal");
         const [language, setLanguage] = useState("en");
         const [isLoading, setIsLoading] = useState(false);
-        const [history, setHistory] = useState([
-          {
-            message: "Hi, I'm Brian. Ask me anything about my career.",
-            actor: "bot",
-          },
-          {
-            message: "hello, how are you?",
-            actor: "user",
-          },
-        ]);
+        const [history, setHistory] = useState([]);
 
         // this has to be done this way due to Preact weirdness with useState
         const appendHistory = (currentHistory, message, actor) => {
@@ -123,8 +170,14 @@
         // </select>
         // <hr />
         return html`
-          <div class="font-sans">
-            <div>
+          <div
+            class="font-sans h-[calc(100vh-120px)] md:h-[calc(100vh-160px)] flex flex-col justify-center"
+          >
+            ${history.length === 0
+              ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
+              : ""}
+            <!-- Chat history -->
+            <div class="grow overflow-y-scroll">
               <span>
                 ${isLoading
                   ? html`<img alt="spinner" src="./assets/spinner.svg" />`
@@ -140,35 +193,11 @@
                 })}
               </div>
             </div>
-            <!-- Input -->
-            <div
-              class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 py-2 border-2 border-gray-300 w-full border-1 dark:border-gray-700 focus-within:border-slate-900"
-            >
-              <input
-                class="w-full focus:outline-none focus:ring-0"
-                placeholder="Tell me about Brian"
-                type="text"
-                value=${message}
-                onInput=${handleInput}
-                onkeydown=${(e) => {
-                  if (e.key === "Enter") {
-                    clicked();
-                  }
-                }}
-              />
-              <button
-                class="focus:outline-none focus:ring-0"
-                onClick=${clicked}
-              >
-                <img
-                  height="24"
-                  width="24"
-                  class=""
-                  src="./assets/airplane.svg"
-                  alt="send"
-                />
-              </button>
-            </div>
+            ${html`<${ChatMessageInput}
+              message=${message}
+              handleInput=${handleInput}
+              clicked=${clicked}
+            />`}
           </div>
         `;
       }
