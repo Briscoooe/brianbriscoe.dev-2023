@@ -229,7 +229,7 @@
           <div
             class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-between"
           >
-            <div>
+            <div class="overflow-y-scroll">
             ${history.length === 0
               ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
               : ""}
