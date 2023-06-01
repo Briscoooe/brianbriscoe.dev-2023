@@ -128,7 +128,6 @@
       }
 
       function App() {
-        const [output, setOutput] = useState("");
         const [message, setMessage] = useState("");
         const [persona, setPersona] = useState("normal");
         const [language, setLanguage] = useState("en");
@@ -139,7 +138,6 @@
           const currentHistory = [...history];
           currentHistory.push({ message, actor: "user" });
           setHistory(currentHistory);
-          setOutput("");
           setMessage("");
           setIsLoading(true);
           const response = await fetch(
