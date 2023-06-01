@@ -813,7 +813,9 @@ body {
   max-width: var(--page-width);
   margin: auto;
   display: block;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding: 1em;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 .title {
