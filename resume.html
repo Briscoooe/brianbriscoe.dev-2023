@@ -225,23 +225,9 @@
           setMessage(e.target.value);
         };
 
-        // <a href="https://github.com/briscoooe/resumai" style="color:red">
-        //   <img src="./assets/github.svg" alt="github" />
-        // </a>
-        // <select onChange=${(e) => setPersona(e.target.value)}>
-        //   ${personas.map((persona) => {
-        //     return html`<option value=${persona}>${persona}</option>`;
-        //   })}
-        // </select>
-        // <select onChange=${(e) => setLanguage(e.target.value)}>
-        //   ${languages.map((language) => {
-        //     return html`<option value=${language}>${language}</option>`;
-        //   })}
-        // </select>
-        // <hr />
         return html`
           <div
-            class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-center"
+            class="font-sans h-[calc(100svh-120px)] md:h-[calc(100svh-160px)] flex flex-col justify-between"
           >
             ${history.length === 0
               ? html`<${WelcomeState} sendChatMessage=${sendChatMessage} />`
