@@ -28,6 +28,9 @@
     background: #1f2933;
     color: white;
   }
+  img {
+    filter: invert(1);
+  }
   a {
     color: #fffdfd;
   }
