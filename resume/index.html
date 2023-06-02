@@ -176,6 +176,7 @@
               class="flex mt-2 flex-row justify-between space-x-2 rounded-md px-4 md:px-6 py-3 border-2 border-slate-300 w-full border-1 dark:border-slate-700 focus-within:border-slate-900 dark:focus-within:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition"
             >
               <input
+                id="chat-input"
                 class="w-full focus:outline-none focus:ring-0 bg-transparent"
                 placeholder="Ask me anything"
                 type="text"
@@ -265,6 +266,13 @@
             scrollIntoView();
           }
         }, [isLoading]);
+
+        useEffect(() => {
+          const chatInput = document.getElementById("chat-input");
+          if (chatInput) {
+            chatInput.focus();
+          }
+        }, [history]);
 
         const clicked = () => {
           sendChatMessage(message);
