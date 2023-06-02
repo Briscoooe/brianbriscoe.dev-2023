@@ -18,13 +18,13 @@ While there's no explicit build step, there is a file watcher that needs to be r
 npx tailwindcss -i ./index.css -o ./output.css --watch
 ```
 
-Also every now and then I run prettier to clean up the formatting. Preact uses backticked strings for HTML and by default my IDE does not format them correctly.
+Also, every now and then I run prettier to clean up the formatting. Preact uses templated string literals for HTML and by default my IDE does not understand how to format them.
 
 ```bash
 npx prettier --write .    
 ```
 
 ## Todo
-- [ ] Add multiple language support
+- [ ] Add response language support
 - [ ] Add bot persona support (maybe)
 - [ ] Add plain text alternative
