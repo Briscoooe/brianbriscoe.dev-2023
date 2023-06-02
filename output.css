@@ -802,6 +802,14 @@ video {
   font-weight: 500;
 }
 
+.font-bold{
+  font-weight: 700;
+}
+
+.font-semibold{
+  font-weight: 600;
+}
+
 .italic{
   font-style: italic;
 }
