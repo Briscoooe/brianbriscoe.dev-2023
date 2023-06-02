@@ -961,7 +961,7 @@ header > nav {
 }
 
 header > nav > a {
-  margin: 1em;
+  margin: 0.75em;
 }
 
 .blog-post {
