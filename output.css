@@ -1070,6 +1070,16 @@ code {
     border-color: rgb(51 65 85 / var(--tw-border-opacity));
   }
 
+  .dark\:border-b-slate-100 {
+    --tw-border-opacity: 1;
+    border-bottom-color: rgb(241 245 249 / var(--tw-border-opacity));
+  }
+
+  .dark\:border-b-slate-200 {
+    --tw-border-opacity: 1;
+    border-bottom-color: rgb(226 232 240 / var(--tw-border-opacity));
+  }
+
   .dark\:bg-slate-200 {
     --tw-bg-opacity: 1;
     background-color: rgb(226 232 240 / var(--tw-bg-opacity));
