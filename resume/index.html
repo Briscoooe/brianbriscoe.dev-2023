@@ -161,8 +161,8 @@
           const response = await fetch(
             `${apiUrl}/chat?${new URLSearchParams({
               message,
-              persona: persona.value,
-              language: language.value,
+              persona: "normal",
+              language: "en",
             })}`,
             {
               method: "GET",
