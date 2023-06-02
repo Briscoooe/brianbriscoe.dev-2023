@@ -15,56 +15,15 @@
       import { useState, useEffect } from "https://esm.sh/preact/hooks";
       import htm from "https://esm.sh/htm";
       const apiUrl = "https://resumai.fly.dev";
-      // const apiUrl = "http://localhost:8000";
 
       const html = htm.bind(h);
-      const exampleQuestions = [
-        "What are Brian's areas of expertise?",
-        "Does Brian have any open source contributions?",
-        "What are some of Brian's personal projects?",
-      ];
       const topics = [
         { label: "Experience", icon: "../assets/briefcase.svg" },
-        { label: "Tech", icon: "../assets/tech.svg" },
+        { label: "Tech stack", icon: "../assets/tech.svg" },
         { label: "Education", icon: "../assets/education.svg" },
         { label: "Personal projects", icon: "../assets/beaker.svg" },
         { label: "Open source", icon: "../assets/star.svg" },
       ];
-      const personas = [
-        { label: "Normal", value: "normal" },
-        { label: "Friendly", value: "friendly" },
-        { label: "Poet", value: "poet" },
-        { label: "Rapper", value: "rapper" },
-      ];
-      const languages = [
-        { label: "English 🇬🇧", value: "en" },
-        { label: "Spanish 🇪🇸", value: "es" },
-        { label: "French 🇫🇷", value: "fr" },
-        { label: "German 🇩🇪", value: "de" },
-        { label: "Italian 🇮🇹", value: "it" },
-        { label: "Portuguese 🇵🇹", value: "pt" },
-      ];
-
-      function ExampleQuestion(props) {
-        const { question, onClick } = props;
-        return html`<button
-          class="bg-slate-100 dark:bg-slate-600 px-3 py-4 rounded-md hover:bg-slate-200 dark:hover:bg-slate-500 transition w-full"
-          onClick=${() => onClick(question)}
-        >
-          "${question}"
-        </button>`;
-      }
-      //
-      // <div
-      //         className="flex flex-col md:flex-row md:space-x-4 md:space-y-0 space-x-0 space-y-2 mt-2 mb-2"
-      // >
-      //   ${exampleQuestions.map((question) => {
-      //   return html`<${ExampleQuestion}
-      //           question=${question}
-      //           onClick=${sendChatMessage}
-      //         />`;
-      // })}
-      // </div>
 
       function WelcomeState(props) {
         const { sendChatMessage } = props;
@@ -97,7 +56,7 @@
       };
 
       function ChatMessage(props) {
-        const { message, actor, isLoading } = props;
+        const { message, actor } = props;
         const classes =
           actor === "bot"
             ? "bg-slate-200 dark:bg-slate-700"
@@ -140,35 +99,11 @@
         `;
       }
 
-      // function ConfigurationSelect(props) {
-      //   const { options, selected, onChange } = props;
-      //   return html`
-      //     <div class="flex flex-col">
-      //       <label class="text-sm font-medium">${label}</label>
-      //       <select
-      //         class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border-slate-300 focus:outline-none focus:ring-0 focus:border-slate-900 dark:focus:border-slate-100 dark:text-slate-800 bg-white dark:bg-slate-200 transition sm:text-sm rounded-md"
-      //         value=${selected}
-      //         onChange=${(e) => onChange(e.target.value)}
-      //       >
-      //         ${options.map((option) => {
-      //           return html`<option value=${option.value}>
-      //             ${option.label}
-      //           </option>`;
-      //         })}
-      //       </select>
-      //     </div>
-      //   `;
-      // }
-
       function ChatMessageInput(props) {
         const {
           message,
           handleInput,
           clicked,
-          persona,
-          setPersona,
-          language,
-          setLanguage,
         } = props;
         return html`
           <div class="flex flex-col">
@@ -207,14 +142,6 @@
 
       function App() {
         const [message, setMessage] = useState("");
-        const [persona, setPersona] = useState({
-          label: "Normal",
-          value: "normal",
-        });
-        const [language, setLanguage] = useState({
-          label: "English 🇬🇧",
-          value: "en",
-        });
         const [isLoading, setIsLoading] = useState(false);
         const [history, setHistory] = useState([]);
 
@@ -302,10 +229,6 @@
               message=${message}
               handleInput=${handleInput}
               clicked=${clicked}
-              persona=${persona}
-              setPersona=${setPersona}
-              language=${language}
-              setLanguage=${setLanguage}
             />`}
           </div>
         `;
