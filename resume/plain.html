@@ -71,11 +71,20 @@
         `;
       }
 
+      function SectionTitle(props) {
+        const { title } = props;
+        return html`
+          <span class="text-lg w-full w-full border-b-2 border-b-slate-700 pb-0.5 mb-1"
+            >${title}</span
+          >
+        `;
+      }
+
       function RecentTechnologies(props) {
         const { recent_technology_categories } = props;
         return html`
           <div class="flex flex-col">
-            <span class="text-lg w-full">Recent technologies</span>
+            ${html`<${SectionTitle} title="Recent Technologies" />`}
             <div class="space-y-1">
               ${recent_technology_categories.map(
                 (recentTechnologyCategory) => html`
@@ -106,7 +115,7 @@
         const { experiences } = props;
         return html`
           <div class="flex flex-col">
-            <span class="text-lg w-full">Experience</span>
+            ${html`<${SectionTitle} title="Experience" />`}
             <div class="space-y-2">
               ${experiences.map(
                 (experience) => html`
@@ -131,9 +140,12 @@
                         <span class="italic">${experience.title}</span>
                         <span class="">${experience.location}</span>
                       </div>
-                      <span class="">${convertToHtml(experience.summary)}</span>
-
-                      <span class="italic"
+                      <div
+                        dangerouslySetInnerHTML=${{
+                          __html: convertToHtml(experience.summary),
+                        }}
+                      />
+                      <span class="italic mt-1 flex-wrap flex flex-row"
                         >Primary technologies:
                         ${experience.skills.map(
                           (skill, index) => html`
@@ -145,6 +157,114 @@
                           `
                         )}</span
                       >
+                    </div>
+                  </div>
+                `
+              )}
+            </div>
+          </div>
+        `;
+      }
+
+      function Projects(props) {
+        const { projects } = props;
+        return html`
+          <div class="flex flex-col">
+            ${html`<${SectionTitle} title="Projects" />`}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ">
+              ${projects.map(
+                (project) => html`
+                  <div class="flex flex-col">
+                    <div
+                      class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                    >
+                      <a
+                        class="font-medium text-md cursor-pointer underline"
+                        href=${project.link}
+                        >${project.title}</a
+                      >
+                    </div>
+                    <div class="text-sm flex flex-col space-y-1 mt-1">
+                      <div>${project.description}</div>
+                      <span class="italic mt-1 flex-wrap flex flex-row"
+                        >Primary technologies:
+                        ${project.technologies.map(
+                          (skill, index) => html`
+                            <span class="ml-1"
+                              >${skill}${index !==
+                              project.technologies.length - 1
+                                ? ","
+                                : ""}</span
+                            >
+                          `
+                        )}</span
+                      >
+                    </div>
+                  </div>
+                `
+              )}
+            </div>
+          </div>
+        `;
+      }
+
+      function Education(props) {
+        const { education } = props;
+        return html`
+          <div class="flex flex-col">
+            ${html`<${SectionTitle} title="Education" />`}
+            <div class="space-y-2">
+              ${education.map(
+                (educationItem) => html`
+                  <div class="flex flex-col">
+                    <div
+                      class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                    >
+                      <span class="font-medium text-md"
+                        >${educationItem.school}</span
+                      >
+                      <span class="text-sm"
+                        >${formatDateRange(
+                          educationItem.start_date,
+                          educationItem.end_date
+                        )}</span
+                      >
+                    </div>
+                    <div class="text-sm flex flex-col">
+                      <div
+                        class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                      >
+                        <span class="italic">${educationItem.degree}</span>
+                      </div>
+                    </div>
+                  </div>
+                `
+              )}
+            </div>
+          </div>
+        `;
+      }
+
+      function OpenSourceContributions(props) {
+        const { open_source_contributions } = props;
+        return html`
+          <div class="flex flex-col">
+            ${html`<${SectionTitle} title="Open Source Contributions" />`}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ">
+              ${open_source_contributions.map(
+                (openSourceContribution) => html`
+                  <div class="flex flex-col">
+                    <div
+                      class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                    >
+                      <a
+                        class="font-medium text-md cursor-pointer underline"
+                        href=${openSourceContribution.link}
+                        >${openSourceContribution.title}</a
+                      >
+                    </div>
+                    <div class="text-sm flex flex-col space-y-1 mt-1">
+                      <div>${openSourceContribution.description}</div>
                     </div>
                   </div>
                 `
@@ -166,7 +286,7 @@
         }, []);
 
         return html`
-          <div class="font-sans flex flex-col tracking-tight space-y-2">
+          <div class="font-sans flex flex-col space-y-2">
             <div class="flex flex-row w-full">
               <div class="flex flex-col md:flex-row w-full justify-between">
                 <div class="flex flex-col">
@@ -186,6 +306,14 @@
             />`}
             ${resumeData &&
             html`<${Experiences} experiences="${resumeData.experience}" />`}
+            ${resumeData &&
+            html`<${Projects} projects="${resumeData.personal_projects}" />`}
+            ${resumeData &&
+            html`<${OpenSourceContributions}
+              open_source_contributions="${resumeData.open_source_contributions}"
+            />`}
+            ${resumeData &&
+            html`<${Education} education="${resumeData.education}" />`}
           </div>
         `;
       }
