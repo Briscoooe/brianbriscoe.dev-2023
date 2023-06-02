@@ -152,6 +152,7 @@
           chatWindowElement.scrollIntoView({ behavior: "smooth" });
         };
 
+        // TODO optimise re-renders here
         const sendChatMessage = async (message) => {
           const currentHistory = [...history];
           currentHistory.push({ message, actor: "user" });
