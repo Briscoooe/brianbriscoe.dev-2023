@@ -30,4 +30,4 @@ npx prettier --write .
 
 - [ ] Add response language support
 - [ ] Add bot persona support (maybe)
-- [ ] Add plain text alternative
+- [x] Add plain text alternative
