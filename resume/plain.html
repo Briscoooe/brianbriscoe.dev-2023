@@ -17,36 +17,147 @@
       const apiUrl = "https://resumai.fly.dev";
       const html = htm.bind(h);
 
-      function MetadataItem(props) {
-        const { icon, title } = props;
-        return html`
-          <div class="flex flex-row items-center">
-            <img alt="icon" src="${icon}" class="w-4 h-4" />
-            <span class="text-sm">${title}</span>
-          </div>
-        `;
-      }
-
       const metadataItems = [
         { title: "Dublin, Ireland", icon: "../assets/location.svg" },
-        { title: "https://github.com/briscoooe", icon: "../assets/github.svg" },
-        {
-          title: "https://linkedin.com/in/brianbriscoe1",
-          icon: "../assets/linkedin.svg",
-        },
-        {
-          title: "https://twitter.com/briscoooe",
-          icon: "../assets/twitter.svg",
-        },
         {
           title: "brianbriscoe06@gmail.com",
           icon: "../assets/email.svg",
         },
+        {
+          title: "https://github.com/briscoooe",
+          icon: "../assets/github.svg",
+          isLink: true,
+        },
+        {
+          title: "https://linkedin.com/in/brianbriscoe1",
+          icon: "../assets/linkedin.svg",
+          isLink: true,
+        },
+        {
+          title: "https://twitter.com/briscoooe",
+          icon: "../assets/twitter.svg",
+          isLink: true,
+        },
       ];
 
+      function formatDateRange(start, end) {
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        const startMonth = startDate.toLocaleString("default", {
+          month: "short",
+        });
+        const endMonth = endDate.toLocaleString("default", { month: "short" });
+        const startYear = startDate.getFullYear();
+        const endYear = endDate.getFullYear();
+        return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
+      }
+
+      function convertToHtml(text) {
+        return text.replace(/\n/g, "<br />");
+      }
+
+      function MetadataItem(props) {
+        const { icon, title } = props;
+        return html`
+          <div class="flex flex-row items-center">
+            <img alt="icon" src="${icon}" class="w-4 h-4 mr-1" />
+
+            <span class="text-sm">
+              ${props.isLink
+                ? html`<a class="underline" href="${title}">${title}</a>`
+                : html`${title}`}
+            </span>
+          </div>
+        `;
+      }
+
+      function RecentTechnologies(props) {
+        const { recent_technology_categories } = props;
+        return html`
+          <div class="flex flex-col">
+            <span class="text-lg w-full">Recent technologies</span>
+            <div class="space-y-1">
+              ${recent_technology_categories.map(
+                (recentTechnologyCategory) => html`
+                  <div class="flex flex-col">
+                    <span class="text-md font-medium"
+                      >${recentTechnologyCategory.title}</span
+                    >
+                    <div class="flex flex-row flex-wrap">
+                      ${recentTechnologyCategory.technologies.map(
+                        (technology, index) => html`
+                          <span class="text-sm mr-1"
+                            >${technology}${index !==
+                            recentTechnologyCategory.technologies.length - 1
+                              ? ","
+                              : ""}</span
+                          >
+                        `
+                      )}
+                    </div>
+                  </div>
+                `
+              )}
+            </div>
+          </div>
+        `;
+      }
+      function Experiences(props) {
+        const { experiences } = props;
+        return html`
+          <div class="flex flex-col">
+            <span class="text-lg w-full">Experience</span>
+            <div class="space-y-2">
+              ${experiences.map(
+                (experience) => html`
+                  <div class="flex flex-col">
+                    <div
+                      class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                    >
+                      <span class="font-medium text-md"
+                        >${experience.company}</span
+                      >
+                      <span class="text-sm"
+                        >${formatDateRange(
+                          experience.start_date,
+                          experience.end_date
+                        )}</span
+                      >
+                    </div>
+                    <div class="text-sm flex flex-col">
+                      <div
+                        class="flex md:flex-row flex-col items-start md:items-center justify-between"
+                      >
+                        <span class="italic">${experience.title}</span>
+                        <span class="">${experience.location}</span>
+                      </div>
+                      <span class="">${convertToHtml(experience.summary)}</span>
+
+                      <span class="italic"
+                        >Primary technologies:
+                        ${experience.skills.map(
+                          (skill, index) => html`
+                            <span class="mr-1"
+                              >${skill}${index !== experience.skills.length - 1
+                                ? ","
+                                : ""}</span
+                            >
+                          `
+                        )}</span
+                      >
+                    </div>
+                  </div>
+                `
+              )}
+            </div>
+          </div>
+        `;
+      }
+
       function App() {
-        const [resumeData, setResumeData] = useState({});
+        const [resumeData, setResumeData] = useState(null);
         useEffect(() => {
+          console.log("fetching");
           fetch(`${apiUrl}/resume`)
             .then((res) => res.json())
             .then((data) => {
@@ -55,21 +166,26 @@
         }, []);
 
         return html`
-          <div class="font-sans flex flex-col">
-            <div class="flex flex-row">
-              <img
-                src="../assets/me.jpg"
-                class="rounded w-24 h-24 md:w-32 md:h-32"
-                alt="me"
-              />
-              <div class="flex flex-col">
-                <span class="text-2xl">Brian Briscoe</span>
-                <span class="text-lg">Senior Software Engineer</span>
-                ${metadataItems.map(
-                  (item) => html`<${MetadataItem} ...${item} />`
-                )}
+          <div class="font-sans flex flex-col tracking-tight space-y-2">
+            <div class="flex flex-row w-full">
+              <div class="flex flex-col md:flex-row w-full justify-between">
+                <div class="flex flex-col">
+                  <span class="text-2xl font-medium">Brian Briscoe</span>
+                  <span class="text-lg">Senior Software Engineer</span>
+                </div>
+                <div class="flex flex-col">
+                  ${metadataItems.map(
+                    (item) => html`<${MetadataItem} ...${item} />`
+                  )}
+                </div>
               </div>
             </div>
+            ${resumeData &&
+            html`<${RecentTechnologies}
+              recent_technology_categories="${resumeData.recent_technology_categories}"
+            />`}
+            ${resumeData &&
+            html`<${Experiences} experiences="${resumeData.experience}" />`}
           </div>
         `;
       }
