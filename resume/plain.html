@@ -65,7 +65,7 @@
           <div class="flex flex-row items-center">
             <img alt="icon" src="${icon}" class="w-4 h-4 mr-1" />
 
-            <span class="text-sm">
+            <span class="text-md">
               ${props.isLink
                 ? html`<a class="underline" href="${title}">${title}</a>`
                 : html`${title}`}
@@ -77,7 +77,7 @@
       function SectionTitle(props) {
         const { title } = props;
         return html`
-          <span class="text-lg w-full w-full border-b-2 border-b-slate-700 dark:border-b-slate-200 pb-0.5 mb-1"
+          <span class="text-2xl w-full w-full border-b-2 border-b-slate-700 dark:border-b-slate-200 pb-0.5 mb-1"
             >${title}</span
           >
         `;
@@ -92,13 +92,13 @@
               ${recent_technology_categories.map(
                 (recentTechnologyCategory) => html`
                   <div class="flex flex-col">
-                    <span class="text-md font-medium"
+                    <span class="text-lg font-medium"
                       >${recentTechnologyCategory.title}</span
                     >
                     <div class="flex flex-row flex-wrap">
                       ${recentTechnologyCategory.technologies.map(
                         (technology, index) => html`
-                          <span class="text-sm mr-1"
+                          <span class="text-md mr-1"
                             >${technology}${index !==
                             recentTechnologyCategory.technologies.length - 1
                               ? ","
@@ -126,17 +126,17 @@
                     <div
                       class="flex md:flex-row flex-col items-start md:items-center justify-between"
                     >
-                      <a class="font-medium text-md underline cursor-pointer" href=${experience.link}
+                      <a class="font-medium text-lg underline cursor-pointer" href=${experience.link}
                         >${experience.company}</a
                       >
-                      <span class="text-sm"
+                      <span class="text-md"
                         >${formatDateRange(
                           experience.start_date,
                           experience.end_date
                         )}</span
                       >
                     </div>
-                    <div class="text-sm flex flex-col">
+                    <div class="text-md flex flex-col">
                       <div
                         class="flex md:flex-row flex-col items-start md:items-center justify-between"
                       >
@@ -182,12 +182,12 @@
                       class="flex md:flex-row flex-col items-start md:items-center justify-between"
                     >
                       <a
-                        class="font-medium text-md cursor-pointer underline"
+                        class="font-medium text-lg cursor-pointer underline"
                         href=${project.link}
                         >${project.title}</a
                       >
                     </div>
-                    <div class="text-sm flex flex-col space-y-1 mt-1">
+                    <div class="text-md flex flex-col space-y-1 mt-1">
                       <div>${project.description}</div>
                       <span class="italic mt-1 flex-wrap flex flex-row"
                         >Primary technologies:
@@ -223,17 +223,17 @@
                     <div
                       class="flex md:flex-row flex-col items-start md:items-center justify-between"
                     >
-                      <span class="font-medium text-md"
+                      <span class="font-medium text-lg"
                         >${educationItem.school}</span
                       >
-                      <span class="text-sm"
+                      <span class="text-md"
                         >${formatDateRange(
                           educationItem.start_date,
                           educationItem.end_date
                         )}</span
                       >
                     </div>
-                    <div class="text-sm flex flex-col">
+                    <div class="text-md flex flex-col">
                       <div
                         class="flex md:flex-row flex-col items-start md:items-center justify-between"
                       >
@@ -261,12 +261,12 @@
                       class="flex md:flex-row flex-col items-start md:items-center justify-between"
                     >
                       <a
-                        class="font-medium text-md cursor-pointer underline"
+                        class="font-medium text-lg cursor-pointer underline"
                         href=${openSourceContribution.link}
                         >${openSourceContribution.title}</a
                       >
                     </div>
-                    <div class="text-sm flex flex-col space-y-1 mt-1">
+                    <div class="text-md flex flex-col space-y-1 mt-1">
                       <div>${openSourceContribution.description}</div>
                     </div>
                   </div>
@@ -293,8 +293,8 @@
             <div class="flex flex-row w-full">
               <div class="flex flex-col md:flex-row w-full justify-between">
                 <div class="flex flex-col">
-                  <span class="text-2xl font-medium">Brian Briscoe</span>
-                  <span class="text-lg">Senior Software Engineer</span>
+                  <span class="text-3xl font-medium">Brian Briscoe</span>
+                  <span class="text-2xl">Senior Software Engineer</span>
                 </div>
                 <div class="flex flex-col space-y-1">
                   ${metadataItems.map(
