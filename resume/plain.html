@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <meta charset="utf-8" />
+    <title>Brian Briscoe - Resume</title>
+    <link href="../output.css" rel="stylesheet" />
+    <script src="../components/header-component.js"></script>
+    <script src="../components/popup-component.js"></script>
+    <script type="module">
+      import { h, render } from "https://esm.sh/preact";
+      import { useState, useEffect } from "https://esm.sh/preact/hooks";
+      import htm from "https://esm.sh/htm";
+      const apiUrl = "https://resumai.fly.dev";
+      const html = htm.bind(h);
+
+      function MetadataItem(props) {
+        const { icon, title } = props;
+        return html`
+          <div class="flex flex-row items-center">
+            <img alt="icon" src="${icon}" class="w-4 h-4" />
+            <span class="text-sm">${title}</span>
+          </div>
+        `;
+      }
+
+      const metadataItems = [
+        { title: "Dublin, Ireland", icon: "../assets/location.svg" },
+        { title: "https://github.com/briscoooe", icon: "../assets/github.svg" },
+        {
+          title: "https://linkedin.com/in/brianbriscoe1",
+          icon: "../assets/linkedin.svg",
+        },
+        {
+          title: "https://twitter.com/briscoooe",
+          icon: "../assets/twitter.svg",
+        },
+        {
+          title: "brianbriscoe06@gmail.com",
+          icon: "../assets/email.svg",
+        },
+      ];
+
+      function App() {
+        const [resumeData, setResumeData] = useState({});
+        useEffect(() => {
+          fetch(`${apiUrl}/resume`)
+            .then((res) => res.json())
+            .then((data) => {
+              setResumeData(data);
+            });
+        }, []);
+
+        return html`
+          <div class="font-sans flex flex-col">
+            <div class="flex flex-row">
+              <img
+                src="../assets/me.jpg"
+                class="rounded w-24 h-24 md:w-32 md:h-32"
+                alt="me"
+              />
+              <div class="flex flex-col">
+                <span class="text-2xl">Brian Briscoe</span>
+                <span class="text-lg">Senior Software Engineer</span>
+                ${metadataItems.map(
+                  (item) => html`<${MetadataItem} ...${item} />`
+                )}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      render(html`<${App} />`, document.getElementById("app"));
+    </script>
+  </head>
+  <body>
+    <main>
+      <header-component></header-component>
+      <div id="app"></div>
+    </main>
+  </body>
+</html>

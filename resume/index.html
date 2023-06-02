@@ -87,12 +87,22 @@
               })}
             </div>
             ${!isLoading && history.length > 0
-              ? html`<button
-                  class="rounded-md bg-slate-50 dark:bg-slate-600 px-3 py-4 mt-2 w-full border-2 border-slate-200 dark:border-slate-400"
-                  onClick=${startAgain}
-                >
-                  Start again
-                </button>`
+              ? html`
+                  <div class="text-center mt-2">
+                    <button
+                      class="rounded-md bg-slate-50 dark:bg-slate-600 px-3 py-4 mb-2 w-full border-2 border-slate-200 dark:border-slate-400"
+                      onClick=${startAgain}
+                    >
+                      Start again
+                    </button>
+                    <a
+                      href="./plain"
+                      class="underline text-slate-600 dark:text-slate-300"
+                    >
+                      or view plain-text version</a
+                    >
+                  </div>
+                `
               : null}
             <div id="chat-message-log-end"></div>
           </div>
@@ -100,11 +110,7 @@
       }
 
       function ChatMessageInput(props) {
-        const {
-          message,
-          handleInput,
-          clicked,
-        } = props;
+        const { message, handleInput, clicked } = props;
         return html`
           <div class="flex flex-col">
             <div
