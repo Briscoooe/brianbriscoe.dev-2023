@@ -1,5 +1,7 @@
 # ResumAI
 
+🔗 [https://brianbriscoe.dev/resume](https://brianbriscoe.dev/resume)
+
 This is a lightweight web app that allows you to chat about my resume with a bot using LangChain and OpenAI GPT 3.5.
 
 ## Tech stack
