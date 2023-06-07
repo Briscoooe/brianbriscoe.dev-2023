@@ -6,6 +6,7 @@ class HeaderComponent extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header>
+          <script defer src="/_vercel/insights/script.js"></script> 
           <a href="/" class="title">
               Brian Briscoe
           </a>
