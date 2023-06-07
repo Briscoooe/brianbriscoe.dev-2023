@@ -22,7 +22,7 @@
         { label: "Tech stack", icon: "../assets/tech.svg" },
         { label: "Education", icon: "../assets/education.svg" },
         { label: "Personal projects", icon: "../assets/beaker.svg" },
-        { label: "Open source", icon: "../assets/star.svg" },
+        { label: "Open source", icon: "../assets/star.svg", prompt: "Open source contributions" }
       ];
 
       function WelcomeState(props) {
@@ -39,7 +39,7 @@
                 class="bg-slate-100 dark:bg-slate-600 px-3 py-4 rounded-md hover:bg-slate-200 dark:hover:bg-slate-500 transition flex flex-row space-x-1.5 items-center"
                 onClick=${() =>
                   sendChatMessage(
-                    `Tell me about Brian's ${topic.label.toLowerCase()}`
+                    `Tell me about Brian's ${(topic.prompt || topic.label).toLowerCase()}`
                   )}
               >
                 <img alt="avatar" class="w-4 h-4" src="${topic.icon}" />
